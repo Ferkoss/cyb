@@ -1,0 +1,25 @@
+.cont-login{
+  display: flex;
+   width: 100%;
+   height: 100vh;
+   justify-content: center;
+   align-items: center;
+}
+
+.form-login{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   text-align: center;
+   justify-content: center;
+   gap: 10px;
+   border: 2px solid black;
+   border-radius: 50px;
+   max-width: 370px;
+   width: 90%;
+   height: 280px;
+}
+
+.form-login input{
+   width: 90%;
+}

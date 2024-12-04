@@ -1,0 +1,39 @@
+.container-admin-view{
+    display: grid;
+    width: 100%;
+    height: 600px;
+    border: 3px solid black;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas:
+        "img img img"
+        "img img img"
+        "img img img"
+        "cont cont cont";
+        cursor: pointer;
+}
+
+.container-admin-view:hover{
+    box-shadow: 0px 0px 50px black;
+    transition: box-shadow 0.3s;
+}
+
+.container-admin-view img{
+    grid-area: img;
+    width: 100%;
+    height: 100%;
+    border-bottom: 2px solid black;
+}
+
+.content-admin-view{
+    grid-area: cont;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 20px;
+}
+
+.content-admin-view h3 {
+    font-size: 30px;
+}

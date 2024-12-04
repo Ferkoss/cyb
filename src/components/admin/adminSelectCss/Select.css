@@ -1,0 +1,27 @@
+.container-select{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.content-select{
+    display: grid;
+    width: 65%;
+    grid-template-columns: repeat(2,1fr);
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    gap:15px;
+    padding: 30px 0 20px;
+}
+
+.filter-select{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 15px;
+    gap: 5px;
+}

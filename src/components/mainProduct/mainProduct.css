@@ -1,0 +1,31 @@
+.main-prod {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.contenedor-main-prod {
+    height: 100%;
+    width: 65%;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 30px 5px 20px;
+    
+}
+
+@media (max-width:900px){
+
+    .contenedor-main-prod{
+        
+        grid-template-columns: 100%;
+        gap: 20px;
+    }
+
+}
