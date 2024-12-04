@@ -21,141 +21,144 @@ import SelectSaleOrder from "./components/admin/selectSaleOrders/SelectSaleOrder
 import ViewDetails from "./components/admin/viewDetails/viewDetails";
 import Protected from "./components/admin/protected/Protected";
 
-const App=()=>{
+const App = () => {
 
-  const [viewShadowCart,setViewShadowCart] = useState(false)
+  const [viewShadowCart, setViewShadowCart] = useState(false)
 
-const router = createBrowserRouter([
-  {
-    path:"/",
-    element:
-    <View>
-      <Main/>
-    </View>
-    
-  },
-  {
-    path:"/broches",
-    element:
-    <View>
-      <MainProduct category={"broches"}/>
-    </View>
-  },
-  {
-    path:"/set-infantil",
-    element:
-    <View>
-      <MainProduct category={"set-infantil"}/>
-    </View>
-  },
-  {
-    path:"/colitas-de-pelo",
-    element:
-    <View>
-      <MainProduct category={"colitas-de-pelo"}/>
-    </View>
-  },
-  {
-    path:"/vinchas",
-    element:
-    <View>
-      <MainProduct category={"vinchas"}/>
-    </View>
-  },
-  {
-    path:"/tic-tac",
-    element:
-    <View>
-      <MainProduct category={"tic-tac"}/>
-    </View>
-  },
-  {
-    path:"/carteras",
-    element:
-    <View>
-      <MainProduct category={"carteras"}/>
-    </View>
-  },
-  {
-    path:"/billeteras-damas",
-    element:
-    <View>
-      <MainProduct category={"billeteras-damas"}/>
-    </View>
-  },
-  {
-    path:"/billeteras-caballeros",
-    element:
-    <View>
-      <MainProduct category={"billeteras-caballeros"}/>
-    </View>
-  },
-  {
-    path:"/mochilas",
-    element:
-    <View>
-      <MainProduct category={"mochilas"}/>
-    </View>
-  },
-  {
-    path:"/riñoneras-y-bandoleras",
-    element:
-    <View>
-      <MainProduct category={"riñoneras-y-bandoleras"}/>
-    </View>
-  },
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element:
+        <View>
+          <Main />
+        </View>
+
+    },
+    {
+      path: "/broches",
+      element:
+        <View>
+          <MainProduct category={"broches"} />
+        </View>
+    },
+    {
+      path: "/set-infantil",
+      element:
+        <View>
+          <MainProduct category={"set-infantil"} />
+        </View>
+    },
+    {
+      path: "/colitas-de-pelo",
+      element:
+        <View>
+          <MainProduct category={"colitas-de-pelo"} />
+        </View>
+    },
+    {
+      path: "/vinchas",
+      element:
+        <View>
+          <MainProduct category={"vinchas"} />
+        </View>
+    },
+    {
+      path: "/tic-tac",
+      element:
+        <View>
+          <MainProduct category={"tic-tac"} />
+        </View>
+    },
+    {
+      path: "/carteras",
+      element:
+        <View>
+          <MainProduct category={"carteras"} />
+        </View>
+    },
+    {
+      path: "/billeteras-damas",
+      element:
+        <View>
+          <MainProduct category={"billeteras-damas"} />
+        </View>
+    },
+    {
+      path: "/billeteras-caballeros",
+      element:
+        <View>
+          <MainProduct category={"billeteras-caballeros"} />
+        </View>
+    },
+    {
+      path: "/mochilas",
+      element:
+        <View>
+          <MainProduct category={"mochilas"} />
+        </View>
+    },
+    {
+      path: "/riñoneras-y-bandoleras",
+      element:
+        <View>
+          <MainProduct category={"riñoneras-y-bandoleras"} />
+        </View>
+    },
+
+    {
+      path: "*",
+      element: <View><Main/></View>
+    },
+
+    {
+      path: "/cart-summary",
+      element: <View><CartSummary /></View>
+    },
+    {
+      path: "/login",
+      element: <Login />
+    },
+    {
+      path: "/admin-menu",
+      element: <Protected><AdminMenu /></Protected>
+    },
+    {
+      path: "/admin-add-product",
+      element: <Protected><AdminAddProduct /></Protected>
+    },
+    {
+      path: "/admin-select-update",
+      element: <Protected><AdminSelectUpdate /></Protected>
+    },
+    {
+      path: "/admin-update",
+      element: <Protected><AdminUpdateProduct /></Protected>
+    },
+    {
+      path: "/admin-soft-delete",
+      element: <Protected><SelectSoftDelete /></Protected>
+    },
+    {
+      path: "/admin-restore",
+      element: <Protected><AdminSelectRestore /></Protected>
+    },
+    {
+      path: "/admin-delete",
+      element: <Protected><AdminSelectDelete /></Protected>
+    },
+    {
+      path: "/selectSaleOrder",
+      element: <Protected><SelectSaleOrder /></Protected>
+    },
+    {
+      path: "/viewDetails",
+      element: <Protected><ViewDetails /></Protected>
+    }
 
 
+  ])
 
-  {
-    path:"/cart-summary",
-    element:<View><CartSummary/></View>
-  },
-  {
-    path:"/login",
-    element:<Login/>
-  },
-  {
-    path:"/admin-menu",
-    element:<Protected><AdminMenu/></Protected>
-  },
-  {
-    path:"/admin-add-product",
-    element:<Protected><AdminAddProduct/></Protected>
-  },
-  {
-    path:"/admin-select-update",
-    element:<Protected><AdminSelectUpdate/></Protected>
-  },
-  {
-    path:"/admin-update",
-    element:<Protected><AdminUpdateProduct/></Protected>
-  },
-  {
-    path:"/admin-soft-delete",
-    element:<Protected><SelectSoftDelete/></Protected>
-  },
-  {
-    path:"/admin-restore",
-    element:<Protected><AdminSelectRestore/></Protected>
-  },
-  {
-    path:"/admin-delete",
-    element:<Protected><AdminSelectDelete/></Protected>
-  },
-  {
-    path:"/selectSaleOrder",
-    element:<Protected><SelectSaleOrder/></Protected>
-  },
-  {
-    path:"/viewDetails",
-    element:<Protected><ViewDetails/></Protected>
-  }
-
-
-])
-
-return <CartContextProvider><RouterProvider router={router}/></CartContextProvider>
+  return <CartContextProvider><RouterProvider router={router} /></CartContextProvider>
 
 }
 
