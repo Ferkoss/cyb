@@ -27,7 +27,7 @@ const App = () => {
 
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/cyb",
       element:
         <View>
           <Main />

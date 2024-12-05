@@ -5,5 +5,5 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
  // base:"https://ferkoss.github.io/cyb"
-  base:"/cyb/"
+  base:"https://ferkoss.github.io/cyb/"
 })
