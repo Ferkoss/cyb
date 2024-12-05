@@ -105,10 +105,10 @@ const App = () => {
         </View>
     },
 
-    {
+    /*{
       path: "*",
       element: <Navigate to="/" replace/>
-    },
+    },*/
 
     {
       path: "/cart-summary",
