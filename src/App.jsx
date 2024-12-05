@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, createHashRouter, Navigate, RouterProvider } from "react-router-dom";
 import './App.css'
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
@@ -25,9 +25,9 @@ const App = () => {
 
 
 
-  const router = createBrowserRouter([
+  const router = createHashRouter([
     {
-      path: "/cyb",
+      path: "/",
       element:
         <View>
           <Main />
@@ -163,3 +163,32 @@ const App = () => {
 }
 
 export default App
+
+/*<CartContextProvider><BrowserRouter basename=""> 
+    <Routes>
+      <Route path="/" element={<View><Main /></View>} />
+      <Route path="/broches" element={<View><MainProduct category={"broches"} /></View>} />
+      <Route path="/set-infantil" element={<View><MainProduct category={"set-infantil"} /></View>} />
+      <Route path="/colitas-de-pelo" element={<View><MainProduct category={"colitas-de-pelo"} /></View>} />
+      <Route path="/vinchas" element={<View><MainProduct category={"vinchas"} /></View>} />
+      <Route path="/tic-tac" element={<View><MainProduct category={"tic-tac"} /></View>} />
+      <Route path="/carteras" element={<View><MainProduct category={"carteras"} /></View>} />
+      <Route path="/billeteras-damas" element={<View><MainProduct category={"billeteras-damas"} /></View>} />
+      <Route path="/billeteras-caballeros" element={<View><MainProduct category={"billeteras-caballeros"} /></View>} />
+      <Route path="/mochilas" element={<View><MainProduct category={"mochilas"} /></View>} />
+      <Route path="/riñoneras-y-bandoleras" element={<View><MainProduct category={"riñoneras-y-bandoleras"} /></View>} />
+      <Route path="/cart-summary" element={<View><CartSummary /></View>} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/admin-menu" element={<Protected><AdminMenu /></Protected>} />
+      <Route path="/admin-add-product" element={<Protected><AdminAddProduct /></Protected>} />
+      <Route path="/admin-select-update" element={<Protected><AdminSelectUpdate /></Protected>} />
+      <Route path="/admin-update" element={<Protected><AdminUpdateProduct /></Protected>} />
+      <Route path="/admin-soft-delete" element={<Protected><SelectSoftDelete /></Protected>} />
+      <Route path="/admin-restore" element={<Protected><AdminSelectRestore /></Protected>} />
+      <Route path="/admin-delete" element={<Protected><AdminSelectDelete /></Protected>} />
+      <Route path="/selectSaleOrder" element={<Protected><SelectSaleOrder /></Protected>} />
+      <Route path="/viewDetails" element={<Protected><ViewDetails /></Protected>} />
+      {/* Ruta comodín (opcional) }
+      <Route path="*" element={<Navigate to="/" replace />} /> 
+    </Routes>
+  </BrowserRouter></CartContextProvider> */
