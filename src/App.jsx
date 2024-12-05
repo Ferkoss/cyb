@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import './App.css'
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
@@ -23,7 +23,7 @@ import Protected from "./components/admin/protected/Protected";
 
 const App = () => {
 
-  const [viewShadowCart, setViewShadowCart] = useState(false)
+
 
   const router = createBrowserRouter([
     {
@@ -107,7 +107,7 @@ const App = () => {
 
     {
       path: "*",
-      element: <View><Main/></View>
+      element: <Navigate to="/" replace/>
     },
 
     {
