@@ -21,7 +21,7 @@ const AdminUpdateProduct = () => {
     const [colors, setColors] = useState(product.colors)
     const [colorImg, setColorImg] = useState("")
     const [img, setImg] = useState(product.imageUrl)
-    const [img64, setImg64] = useState(true)
+
 
 
     const handlerName = (e) => {
@@ -213,7 +213,7 @@ const AdminUpdateProduct = () => {
 
 
                     </div>
-                    {img == "" ? <div className="image-add div-image" onDragOver={dragOver} onDrop={dragDrop}></div> : <img src={img64 ? "data:image/jpeg;base64," + img : img} className="image-add" onDragOver={dragOver} onDrop={dragDrop} />}
+                    {img == "" ? <div className="image-add div-image" onDragOver={dragOver} onDrop={dragDrop}></div> : <img src={img} className="image-add" onDragOver={dragOver} onDrop={dragDrop} />}
 
                 </div>
 
