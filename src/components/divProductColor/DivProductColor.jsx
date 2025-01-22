@@ -75,7 +75,7 @@ const DivProductColor = ({ id, name, size, img,price,colors }) => {
                     <label htmlFor="color-Broche.nombre">Ingrese su color:  </label>
                     <select defaultValue="" name="color-Broche.nombre" id="color-Broche.nombre" onChange={handlerColor}>
                         <option value="" disabled >Ingrese su opcion</option>
-                        {colors.map((x)=><option key={x.id} value={x.name} data-img={"data:image/jpeg;base64,"+x.image} data-id={x.id}>{x.name}</option>)}
+                        {colors.map((x)=><option key={x.id} value={x.name} data-img={x.image} data-id={x.id}>{x.name}</option>)}
                     </select>
                 </div>
                 <FaCartShopping className="cart-icon" onClick={handlerCart} />

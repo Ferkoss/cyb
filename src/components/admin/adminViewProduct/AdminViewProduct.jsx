@@ -4,7 +4,7 @@ const AdminViewProduct = ({handler,name,category,size,price,img}) =>{
         <div className="container-admin-view" onClick={handler}>
             
 
-            <img src={"data:image/jpeg;base64,"+img} alt="" />
+            <img src={img} alt="" />
             <div className="content-admin-view">
                 <h3>{name}</h3>
                 <h4>{category}</h4>

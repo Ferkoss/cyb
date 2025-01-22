@@ -13,6 +13,9 @@ const MainProduct = ({category})=>{
         
         actualizateCart()
 
+        if(!productLoad)
+            setProductLoad(true)
+
         setProducts("Cargando...")
 
         fetch(`${api_base_url}/Product/GetByCategory/${category}`,{
@@ -35,7 +38,7 @@ const MainProduct = ({category})=>{
             console.log(e)
             setProducts(<p style={{color:"red"}}>Error Inesperado</p>)
         })
-    },[location.pathname])
+    },[location.hash])
 
     useEffect(actualizateLocalStorange,[cart])
 
@@ -46,7 +49,7 @@ const MainProduct = ({category})=>{
             <div className="contenedor-main-prod">
             {
             !productLoad?
-            products.map(x=>x.colors.length!=0?<DivProductColor key={x.id} id={x.id} name={x.name} size={x.size} colors={x.colors} img={"data:image/jpeg;base64,"+x.imageUrl} price={x.price}/>:<DivProduct key={x.id} id={x.id} name={x.name} size={x.size} img={"data:image/jpeg;base64,"+x.imageUrl} price={x.price}/>)
+            products.map(x=>x.colors.length!=0?<DivProductColor key={x.id} id={x.id} name={x.name} size={x.size} colors={x.colors} img={x.imageUrl} price={x.price}/>:<DivProduct key={x.id} id={x.id} name={x.name} size={x.size} img={x.imageUrl} price={x.price}/>)
             :<h2 style={{position:"absolute"}}>{products}</h2>
            // <h2>Cargando...</h2>
         }
