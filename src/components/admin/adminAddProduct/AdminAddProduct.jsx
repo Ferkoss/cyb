@@ -7,7 +7,8 @@ const AdminAddProduct = () => {
 
     const refColors = useRef(null)
     const refModify = useRef(null)
-
+    const refCategory = useRef(null)
+    const refSize = useRef(null)
     const [name, setName] = useState("")
     const [category, setCategory] = useState("")
     const [size, setSize] = useState("")
@@ -36,7 +37,9 @@ const AdminAddProduct = () => {
 
     const handlerColors = () => {
         setColors([...colors, { name: refColors.current.value, imageUrl: colorImg }])
-        console.log(colors)
+        refColors.current.value=""
+        setColorImg("")
+        //console.log(colors)
     }
 
     const handlerModifyColorsFlex = () => {
@@ -128,6 +131,17 @@ const AdminAddProduct = () => {
                 throw new Error("Error inesperado")
             const data = await res.text()
             alert(data)
+
+            setName("")
+            setCategory("")
+            refCategory.current.value=""
+            setSize("")
+            refSize.current.value=""
+            setPrice(0)
+             setColors([])
+             setColorImg("")
+             setImg("")
+             setImg64(false)
         }
         catch (e) { console.log(e) }
     }
@@ -157,12 +171,12 @@ const AdminAddProduct = () => {
 
                         <div className="div-add">
                             <label htmlFor="name">Nombre:</label>
-                            <input type="text" onChange={handlerName} />
+                            <input type="text" onChange={handlerName} value={name}/>
                         </div>
 
                         <div className="div-add">
                             <label htmlFor="category">Categoria:</label>
-                            <select name="category" id="category" defaultValue="" onChange={handlerCategory}>
+                            <select name="category" id="category" defaultValue="" ref={refCategory} onChange={handlerCategory}>
                                 <option value="" disabled >Ingrese su opcion</option>
                                 <option value="broches">Broches</option>
                                 <option value="set-infantil">Set infantil</option>
@@ -179,7 +193,7 @@ const AdminAddProduct = () => {
 
                         <div className="div-add">
                             <label htmlFor="category">Tamaño:</label>
-                            <select name="category" id="category" defaultValue="" onChange={handlerSize}>
+                            <select name="category" id="category" defaultValue="" ref={refSize} onChange={handlerSize}>
                                 <option value="" disabled >Ingrese su opcion</option>
                                 <option value="Mini por dos pares">Mini por dos pares</option>
                                 <option value="Chico">Chico</option>
@@ -190,7 +204,7 @@ const AdminAddProduct = () => {
 
                         <div className="div-add">
                             <label htmlFor="price">Precio:</label>
-                            <input type="number" min={0} onChange={handlerPrice} />
+                            <input type="number" min={0} onChange={handlerPrice} value={price}/>
                         </div>
 
                         <div className="div-add">

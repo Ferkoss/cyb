@@ -21,8 +21,8 @@ const AdminSelectDelete = () => {
         try {
             const res = await fetch(`${api_base_url}/Product/Delete/${product.id}`,{
                 headers:{
-                    "Content-Type": "application/json"
-                    //"Authorization": `Bearer ${localStorage.getItem("token")}`
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
                 },
                 method:"DELETE" 
             })

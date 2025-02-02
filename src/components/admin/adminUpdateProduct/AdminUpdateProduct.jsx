@@ -42,7 +42,9 @@ const AdminUpdateProduct = () => {
 
     const handlerColors = () => {
         setColors([...colors, { name: refColors.current.value, image: colorImg }])
-        console.log(colors)
+        refColors.current.value=""
+        setColorImg("")
+        //console.log(colors)
     }
 
     const handlerModifyColorsFlex = () => {
@@ -100,8 +102,8 @@ const AdminUpdateProduct = () => {
         if (files && files[0]) {
             const fileReader = new FileReader()
             fileReader.onload = (e) => {
-                setImg64(e.target.result.includes("data:image/jpeg;base64,"))
-                setImg(e.target.result.includes("data:image/jpeg;base64,") ? e.target.result.slice(23) : e.target.result) //.slice(23,-1)
+                //setImg64(e.target.result.includes("data:image/jpeg;base64,"))
+                setImg(e.target.result.includes("data:image/jpeg;base64,") ? e.target.result/*.slice(23)*/ : e.target.result) //.slice(23,-1)
                 console.log(e.target.result)
                 console.log("url: " + img)
                 //console.log("url    "+e.target.result)
@@ -112,6 +114,7 @@ const AdminUpdateProduct = () => {
 
     const handlerButtonAdd = async () => {
         try {
+            
             const res = await fetch(`${api_base_url}/Product/Update/${product.id}`, {
                 headers: {
                     "Content-Type": "application/json",
@@ -124,7 +127,7 @@ const AdminUpdateProduct = () => {
                         name: name,
                         category: category,
                         size: size,
-                        imageUrl: img,
+                        imageUrl: img.includes("data:image/jpeg;base64,") ? img.slice(23) : img,
                         price: price,
                         colors: colors.map(x=>({name:x.name,imageUrl:x.image}))
                       
