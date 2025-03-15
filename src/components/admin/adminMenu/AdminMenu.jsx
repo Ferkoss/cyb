@@ -12,6 +12,7 @@ const AdminMenu = () => {
                     <button type="button" onClick={() => { navigate("/admin-soft-delete") }}>Esconder Producto</button>
                     <button type="button" onClick={() => { navigate("/admin-restore") }}>Restaurar Producto</button>
                     <button type="button" onClick={() => { navigate("/admin-select-update") }}>Modificar Producto</button>
+                    <button type="button" onClick={() => { navigate("/update-prices") }}>Modificar Precios del Producto</button>
                 </div>
 
                 <div className="buttons-menu">

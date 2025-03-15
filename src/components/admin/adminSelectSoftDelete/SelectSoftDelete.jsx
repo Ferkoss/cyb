@@ -79,6 +79,7 @@ const SelectSoftDelete=()=>{
             <div className="content-select">
                 {data.filter(x=>x.name.includes(nameFilter) && x.category.includes(categoryFilter)).map((x,i)=><AdminViewProduct key={i+x.name+x.category} handler={()=>{handlerSoftDeleteProduct(x)}} name={x.name} category={x.category} size={x.size} price={x.price} img={x.imageUrl} />)}
             </div>
+            
         </div>
     )
 }

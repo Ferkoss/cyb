@@ -48,7 +48,7 @@ const AdminSelectUpdate=()=>{
     
     return (
         <div className="container-select">
-            <div className="filter-select-update">
+            <div className="filter-select">
                 <label htmlFor="filter-name">Filtrar por nombre</label>
                 <input type="text" name="filter-name" id="filter-name" onChange={handlerNameFilter} value={nameFilter}/>
             </div>
