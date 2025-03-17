@@ -1,11 +1,16 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./divProductPrices.css"
 
-const divProductPrices = ({img, name, size, category, price, id,handlerAggregatePrice,handlerEliminatePrice})=>{
+const divProductPrices = ({img, name, size, category, price, id,handlerAggregatePrice,handlerEliminatePrice,restoreButtons})=>{
 
     const [newPrice,setNewPrice] = useState(0)
     
     const [productModificated,setProductModificated] = useState(false)
+
+
+    useEffect(()=>{
+        setProductModificated(false)
+    },[restoreButtons])
 
     const handlerModifyButton = ()=>{
         handlerAggregatePrice(id,newPrice)

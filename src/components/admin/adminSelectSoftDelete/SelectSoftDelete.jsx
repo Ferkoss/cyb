@@ -70,9 +70,17 @@ const SelectSoftDelete=()=>{
             <div className="filter-select">
                 <label htmlFor="filter-category">Filtrar por categoria</label>
                 <select name="" id="" onChange={handlerCategoryFilter}>
-                    <option value="">Todas</option>
-                    <option value="Broche">Broche</option>
-                    <option value="aaaa">aaaa</option>
+                <option value=""  >Todas las opciones</option>
+                    <option value="broches">Broches</option>
+                    <option value="set-infantil">Set infantil</option>
+                    <option value="colitas-de-pelo">Colitas De Pelo</option>
+                    <option value="vinchas">Vinchas</option>
+                    <option value="tic-tac">Tic Tac</option>
+                    <option value="carteras">Carteras</option>
+                    <option value="billeteras-damas">Billeteras Damas</option>
+                    <option value="billeteras-caballeros">Billeteras Caballeros</option>
+                    <option value="mochilas">Mochilas</option>
+                    <option value="riñoneras-y-bandoleras">Riñoneras Y Bandoleras</option>
                 </select>
             </div>
 

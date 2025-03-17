@@ -9,6 +9,7 @@ const UpdatePrices = () => {
     const [nameFilter, setNameFilter] = useState([])
     const [categoryFilter, setCategoryFilter] = useState([])
     const [pricesToModify, setPricesToModify] = useState([])
+    const [restoreButtons,setRestoreButtons] = useState(false)
     console.log(pricesToModify)
 
     const handlerAggregatePrice = (id, newPrice) => {
@@ -30,9 +31,17 @@ const UpdatePrices = () => {
         setCategoryFilter(e.target.value)
     }
 
+    const changeData=()=>{
+        let newData = [...data]
+        for(let d of pricesToModify){
+            newData.find(x=>x.id==d.id).price = d.price
+        }
+        setData(newData)
+    }
+
     const handlerSendUpdate = async ()=>{
         try {
-            const les = await fetch(`${api_base_url}/Product/UpdatePrices`,{
+            const res = await fetch(`${api_base_url}/Product/UpdatePrices`,{
                 headers:{
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -40,7 +49,12 @@ const UpdatePrices = () => {
                 body: JSON.stringify(pricesToModify),
                 method:"PUT"
             })
+            if(!res.ok)
+                throw new Error("Error Inesperado")
             alert("Precios modificados correctamente")
+            changeData()
+            setRestoreButtons(restoreButtons?false:true)
+            
             
         } catch (error) {
             console.log(error)
@@ -82,14 +96,22 @@ const UpdatePrices = () => {
             <div className="filter-select">
                 <label htmlFor="filter-category">Filtrar por categoria</label>
                 <select name="" id="" onChange={handlerCategoryFilter}>
-                    <option value="">Todas</option>
-                    <option value="Broche">Broche</option>
-                    <option value="aaaa">aaaa</option>
+                <option value=""  >Todas las opciones</option>
+                    <option value="broches">Broches</option>
+                    <option value="set-infantil">Set infantil</option>
+                    <option value="colitas-de-pelo">Colitas De Pelo</option>
+                    <option value="vinchas">Vinchas</option>
+                    <option value="tic-tac">Tic Tac</option>
+                    <option value="carteras">Carteras</option>
+                    <option value="billeteras-damas">Billeteras Damas</option>
+                    <option value="billeteras-caballeros">Billeteras Caballeros</option>
+                    <option value="mochilas">Mochilas</option>
+                    <option value="riñoneras-y-bandoleras">Riñoneras Y Bandoleras</option>
                 </select>
             </div>
 
             <div className="content-select">
-                {data.filter(x => x.name.includes(nameFilter) && x.category.includes(categoryFilter)).map((x) => <DivProductPrices key={x.id} id={x.id} img={x.imageUrl} name={x.name} size={x.size} category={x.category} price={x.price} handlerAggregatePrice={handlerAggregatePrice} handlerEliminatePrice={handlerEliminatePrice} />)}
+                {data.filter(x => x.name.includes(nameFilter) && x.category.includes(categoryFilter)).map((x) => <DivProductPrices key={x.id} id={x.id} img={x.imageUrl} name={x.name} size={x.size} category={x.category} price={x.price} handlerAggregatePrice={handlerAggregatePrice} handlerEliminatePrice={handlerEliminatePrice} restoreButtons={restoreButtons}  />)}
             </div>
             <button type="button" className="button-send-update-prices" onClick={handlerSendUpdate}>Enviar Modificaciónes</button>
         </div>
