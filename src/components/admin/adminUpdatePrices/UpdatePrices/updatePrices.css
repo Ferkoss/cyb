@@ -1,0 +1,15 @@
+.button-send-update-prices{
+    margin: 10px;
+    height: 40px;
+    background-color: transparent;
+    border: 2.5px solid black;
+    border-radius: 30px;
+    font-size: 20px;
+    padding: 0 15px;
+}
+
+.button-send-update-prices:hover{
+    border-color: goldenrod;
+    color: goldenrod;
+    transition: border-color .3s,color .3s;
+}

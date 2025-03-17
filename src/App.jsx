@@ -20,6 +20,7 @@ import { useState } from "react";
 import SelectSaleOrder from "./components/admin/selectSaleOrders/SelectSaleOrder";
 import ViewDetails from "./components/admin/viewDetails/viewDetails";
 import Protected from "./components/admin/protected/Protected";
+import UpdatePrices from "./components/admin/adminUpdatePrices/UpdatePrices/UpdatePrices";
 
 const App = () => {
 
@@ -153,6 +154,10 @@ const App = () => {
     {
       path: "/viewDetails",
       element: <Protected><ViewDetails /></Protected>
+    },
+    {
+      path:"/update-prices",
+      element: <Protected><UpdatePrices/></Protected>
     }
 
 

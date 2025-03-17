@@ -62,7 +62,7 @@
     height: 100%;
     border-bottom: 2px solid;
     grid-area: img;
-    
+    object-fit: contain;
 }
 
 
