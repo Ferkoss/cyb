@@ -42,8 +42,8 @@ const SelectSoftDelete=()=>{
         fetch(`${api_base_url}/Product/GetAllAvailable`,
             {
                 headers:{
-                    "Content-Type": "application/json"
-                    //"Authorization": `Bearer ${localStorage.getItem("token")}`
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
             }
         )

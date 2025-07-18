@@ -41,8 +41,8 @@ const AdminSelectRestore = () => {
         fetch(`${api_base_url}/Product/GetAllNoAvailable`,
             {
                 headers: {
-                    "Content-Type": "application/json"
-                    //"Authorization": `Bearer ${localStorage.getItem("token")}`
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
             }
         )
