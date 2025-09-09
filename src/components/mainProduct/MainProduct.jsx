@@ -10,30 +10,38 @@ const MainProduct = ({ category }) => {
 
 
     const { actualizateCart, actualizateLocalStorange, cart } = useContext(CartContext)
-    const { productsStorange, setProductStorange} = useContext(ProductContext)
+    const { productsStorange, setProductStorange } = useContext(ProductContext)
     const [products, setProducts] = useState([])
     const [productLoad, setProductLoad] = useState(true)
-    const [first,setFirst] = useState(0)
-    const [last,setLast] = useState(20)
-    const [touchButton,setTouchButton] = useState(false)
+    const [first, setFirst] = useState(0)
+    const [last, setLast] = useState(20)
+    const [touchButton, setTouchButton] = useState(false)
 
 
 
 
-    const request = () => {
-        if(touchButton)
+
+    const request = (button) => {
+        console.log(first + "-" + last)
+        console.log(`${api_base_url}/Product/GetByCategory/${category}/${first}/${last}`)
+        //alert("aaaa")
+        if (touchButton)
             return;
+        // alert("bbb")
+        if (!button)
+            setProductLoad(true)
         setTouchButton(true)
         actualizateCart()
 
-        if (!productLoad)
-            setProductLoad(true)
+        if (!button)
+            setProducts("Cargando...")
 
-        setProducts("Cargando...")
+        //let dataStorange = productsStorange.find(x => x.type == category)
 
-        let dataStorange = productsStorange.find(x=>x.type==category)
+        //alert(first+"-"+last+" "+dataStorange.first+"-"+dataStorange.last)
 
-        if(!dataStorange){
+
+        // alert("manda request")
         fetch(`${api_base_url}/Product/GetByCategory/${category}/${first}/${last}`, {
             headers: {
                 accept: "application/json"
@@ -47,29 +55,33 @@ const MainProduct = ({ category }) => {
             })
             .then((res) => {
                 //console.log(res)
-                setProductLoad(false)
-                setProducts(res)
-                setFirst(last+1)
-                setLast(last+20)
-                setProductStorange([...productsStorange, {
-                    type: category,
-                    data: res
-                }])
-                console.log(productsStorange)
+                if (!button)
+                    setProductLoad(false)
+                setProducts([...products, ...res])
+                ///console.log([...products,res])
+                setFirst(last + 1)
+                setLast(last + 20)
+                console.log(first + "-" + last)
+
+
             })
             .catch((e) => {
                 console.log(e)
                 setProducts(<p style={{ color: "red" }}>Error Inesperado</p>)
             })
-        }
-        else {
-            setProductLoad(false)
-            setProducts(dataStorange.data)
-        }
+
+
         setTouchButton(false)
+
     }
 
-    useEffect(request, [location.hash])
+    useEffect(() => {
+        
+        request(false)
+
+    }, [location.hash])
+
+
 
     useEffect(actualizateLocalStorange, [cart])
 
@@ -77,16 +89,16 @@ const MainProduct = ({ category }) => {
 
         <main className="main-prod">
 
-            <div className="contenedor-main">
+            <div className="super-contenedor-main-prod">
                 {
                     !productLoad ? <>
                         <div className="contenedor-main-prod">
 
-                       {products.map(x => x.colors.length != 0 ? <DivProductColor key={x.id} id={x.id} name={x.name} size={x.size} colors={x.colors} img={x.imageUrl} price={x.price} /> : <DivProduct key={x.id} id={x.id} name={x.name} size={x.size} img={x.imageUrl} price={x.price} />)}
+                            {products.map(x => x.colors.length != 0 ? <DivProductColor key={x.id} id={x.id} name={x.name} size={x.size} colors={x.colors} img={x.imageUrl} price={x.price} /> : <DivProduct key={x.id} id={x.id} name={x.name} size={x.size} img={x.imageUrl} price={x.price} />)}
                         </div>
-                       <button type="button" className="boton-agregar" onClick={request}><CgAdd/></button>
-                       </>
-                       : <h2 style={{ position: "absolute" }}>{products}</h2>
+                        <button type="button" className="boton-agregar" onClick={() => { request(true) }}><CgAdd /></button>
+                    </>
+                        : <h2 style={{ position: "absolute" }}>{products}</h2>
                     // <h2>Cargando...</h2>
                 }
             </div>
