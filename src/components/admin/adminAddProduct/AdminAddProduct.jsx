@@ -17,7 +17,7 @@ const AdminAddProduct = () => {
     const [colorImg, setColorImg] = useState("")
     const [img, setImg] = useState("")
     const [img64, setImg64] = useState(false)
-
+    const [touchButton,setTouchButton] = useState(false)
 
     const handlerName = (e) => {
         setName(e.target.value)
@@ -108,6 +108,9 @@ const AdminAddProduct = () => {
     }
 
     const handlerButtonAdd = async () => {
+        if(touchButton)
+            return;
+        setTouchButton(true)
         try {
             const res = await fetch(`${api_base_url}/Product/Add`, {
                 headers: {
@@ -144,6 +147,7 @@ const AdminAddProduct = () => {
              setImg64(false)
         }
         catch (e) { console.log(e) }
+        setTouchButton(false)
     }
     console.log(colors)
     return (
