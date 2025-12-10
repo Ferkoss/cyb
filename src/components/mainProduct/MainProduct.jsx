@@ -55,15 +55,24 @@ const MainProduct = ({ category }) => {
             })
             .then((res) => {
                 //console.log(res)
-                if (!button)
-                    setProductLoad(false)
-                setProducts([...products, ...res])
-                ///console.log([...products,res])
+                //if (!button)
+                setProductLoad(false)
+                setProducts([...products,...res.products])
+                console.log([...products,...res.products])
                 setFirst(last + 1)
                 setLast(last + 20)
                 console.log(first + "-" + last)
-
-
+                console.log(res)
+                if(!button && !sessionStorage.getItem("products"))
+                sessionStorage.setItem("products",JSON.stringify({
+                    category,
+                    products,
+                    first,
+                    last
+                }))
+                else if(!button)
+                    sessionStorage.setItem("products",JSON.stringify({
+                }))
             })
             .catch((e) => {
                 console.log(e)
@@ -76,8 +85,15 @@ const MainProduct = ({ category }) => {
     }
 
     useEffect(() => {
-        
-        request(false)
+        //let session = sessionStorage.getItem("products").find(x=>x.category == category)
+        // if(session){
+        //     setProductLoad(false)
+        //     setProducts(session.products)
+        //     setFirst(session.first)
+        //     setLast(session.last)
+        // }
+        // else
+            request(false)
 
     }, [location.hash])
 
@@ -98,7 +114,8 @@ const MainProduct = ({ category }) => {
                         </div>
                         <button type="button" className="boton-agregar" onClick={() => { request(true) }}><CgAdd /></button>
                     </>
-                        : <h2 style={{ position: "absolute" }}>{products}</h2>
+                        : <h2 className="mensaje-prod" >{products}</h2>
+                        //style={{ position: "absolute" }}
                     // <h2>Cargando...</h2>
                 }
             </div>
