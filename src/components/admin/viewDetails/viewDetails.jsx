@@ -28,7 +28,7 @@ const ViewDetails = () => {
 
         <div className="div-table-details">
             {saleOrder.saleOrders.map(x=><div key={x.id} className="table-details">
-                <img src={`data:image/jpeg;base64,${x.productColor ? x.productColor.image:x.image}`} alt="" />
+                <img src={`${x.product.image}`} alt="" />
                 <p>{x.product.name} {x.productColor ? x.productColor.name:""}</p>
                 <p>{x.count}</p>
                 <p className="detail-subtotal">${x.subTotal}</p>

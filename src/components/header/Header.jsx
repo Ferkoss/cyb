@@ -98,7 +98,7 @@ const total = cart.reduce((acu,x)=>acu+x.price*x.count,0)
                 <div class="carrito-articulo"></div>--> */}
 
             </div>
-            <h3 id="carrito-total">Total: ${total}</h3>
+            {/*<h3 id="carrito-total">Total: ${total}</h3>*/}
             <button type="button" id="enviar-carrito" onClick={handlerButtonCart}>Enviar</button>
         </div>
     </div>

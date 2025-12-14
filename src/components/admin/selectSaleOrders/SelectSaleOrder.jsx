@@ -44,7 +44,7 @@ const SelectSaleOrder = () => {
             <p>{x.emailUser}</p>
             <p>{x.localityUser}</p>
             <p>{x.telUser}</p>
-            <p>{x.date.slice(0,9)}</p>
+            <p>{x.date.slice(0,10)}</p>
 
         </div>)}
 

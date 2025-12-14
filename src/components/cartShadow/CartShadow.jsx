@@ -98,13 +98,13 @@ const CartShadow = ({ view, setView,total }) => {
             email:email,
             localidad:locality,
             pedido:cart.map(x=>`Nombre: ${x.name}\nCantidad: ${x.count}\nPrecio: $${x.price*x.count}`).join("\n---------------------------------------------------\n")
-            +`\n\nTotal: $${total}`
+            +`\n\n`
             ,
             reply_to: "cybproductosrosario@gmail.com",
             },
             "_B3_jwoNht_6X9doT"
         );
-
+//Total: $${total}
         setViewContent(false)
         refFinish.current.style.display="flex"
         localStorage.removeItem("CyB-Cart")
@@ -158,7 +158,7 @@ const CartShadow = ({ view, setView,total }) => {
 
 
         <div className="final-compra" ref={refFinish}>
-            <h3>Muchas gracias por su compra</h3>
+            <h3>Muchas gracias por su pedido</h3>
             <button type="button" onClick={handlerFinish} >Volver al Inicio</button>
         </div>
 
