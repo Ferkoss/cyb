@@ -22,6 +22,7 @@ import ViewDetails from "./components/admin/viewDetails/viewDetails";
 import Protected from "./components/admin/protected/Protected";
 import UpdatePrices from "./components/admin/adminUpdatePrices/UpdatePrices/UpdatePrices";
 import { ProductContextProvider } from "./context/ProductContext";
+import { ImageContextProvider } from "./context/ImageContext";
 
 const App = () => {
 
@@ -40,70 +41,70 @@ const App = () => {
       path: "/broches",
       element:
         <View>
-          <MainProduct category={"broches"} key="broches"/>
+          <MainProduct category={1} key="broches" />
         </View>
     },
     {
       path: "/set-infantil",
       element:
         <View>
-          <MainProduct category={"set-infantil"} key="set-infantil"/>
+          <MainProduct category={4} key="set-infantil" />
         </View>
     },
     {
       path: "/colitas-de-pelo",
       element:
         <View>
-          <MainProduct category={"colitas-de-pelo"} key="colitas-de-pelo"/>
+          <MainProduct category={2} key="colitas-de-pelo" />
         </View>
     },
     {
       path: "/vinchas",
       element:
         <View>
-          <MainProduct category={"vinchas"} key="vinchas"/>
+          <MainProduct category={"vinchas"} key="vinchas" />
         </View>
     },
     {
       path: "/tic-tac",
       element:
         <View>
-          <MainProduct category={"tic-tac"} key="tic-tac"/>
+          <MainProduct category={"tic-tac"} key="tic-tac" />
         </View>
     },
     {
       path: "/carteras",
       element:
         <View>
-          <MainProduct category={"carteras"} key="carteras"/>
+          <MainProduct category={"carteras"} key="carteras" />
         </View>
     },
     {
       path: "/billeteras-damas",
       element:
         <View>
-          <MainProduct category={"billeteras-damas"} key="billeteras-damas"/>
+          <MainProduct category={"billeteras-damas"} key="billeteras-damas" />
         </View>
     },
     {
       path: "/billeteras-caballeros",
       element:
         <View>
-          <MainProduct category={"billeteras-caballeros"} key="billeteras-caballeros"/>
+          <MainProduct category={"billeteras-caballeros"} key="billeteras-caballeros" />
         </View>
     },
     {
       path: "/mochilas",
       element:
         <View>
-          <MainProduct category={"mochilas"} key="mochilas"/>
+          <MainProduct category={"mochilas"} key="mochilas" />
         </View>
     },
     {
       path: "/riñoneras-y-bandoleras",
       element:
         <View>
-          <MainProduct category={"riñoneras-y-bandoleras"} key="riñoneras-bandoleras"/>
+          <MainProduct category={"riñoneras-y-bandoleras"} key="riñoneras-bandoleras" />
         </View>
     },
 
@@ -157,14 +158,20 @@ const App = () => {
       element: <Protected><ViewDetails /></Protected>
     },
     {
-      path:"/update-prices",
-      element: <Protected><UpdatePrices/></Protected>
+      path: "/update-prices",
+      element: <Protected><UpdatePrices /></Protected>
     }
 
 
   ])
 
-  return <CartContextProvider><ProductContextProvider><RouterProvider router={router} /></ProductContextProvider></CartContextProvider>
+  return <ImageContextProvider>
+            <CartContextProvider>
+            <ProductContextProvider>
+              <RouterProvider router={router} />
+            </ProductContextProvider>
+          </CartContextProvider>
+          </ImageContextProvider>
 
 }
 

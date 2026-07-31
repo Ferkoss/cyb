@@ -56,7 +56,7 @@ const CartShadow = ({ view, setView,total }) => {
 
                 saleOrders: cart.map(x=>({
                     prodId: x.id,
-                    prodColorId: x.idProdColor,
+                    colorId: Number(x.idProdColor),
                     count:Number(x.count)
                 }))
                    /* {

@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { api_base_url } from "../../../api"
 import AdminViewProduct from "../adminViewProduct/adminViewProduct"
 import "../adminSelectCss/Select.css"
+import { ImageContext } from "../../../context/ImageContext"
 
 
 const AdminSelectRestore = () => {
@@ -9,6 +10,8 @@ const AdminSelectRestore = () => {
     const [data, setData] = useState([])
     const [nameFilter, setNameFilter] = useState([])
     const [categoryFilter, setCategoryFilter] = useState([])
+
+    const { insertImage, insertImageColor } = useContext(ImageContext)
 
     const handlerNameFilter = (e) => {
         setNameFilter(e.target.value)
@@ -84,7 +87,7 @@ const AdminSelectRestore = () => {
             </div>
 
             <div className="content-select">
-                {data.filter(x => x.name.includes(nameFilter) && x.category.includes(categoryFilter)).map((x, i) => <AdminViewProduct key={i + x.name + x.category} handler={() => { handlerRestoreProduct(x) }} name={x.name} category={x.category} size={x.size} price={x.price} img={x.imageUrl} />)}
+                {data.filter(x=>(x.subCategory+x.productNumber).includes(nameFilter) && x.category.includes(categoryFilter)).map((x, i) => <AdminViewProduct key={x.id} handler={() => { handlerRestoreProduct(x) }} name={x.subCategory + "/" + x.productNumber} category={x.category} size={x.size} price={x.price} img={insertImage({ subCategory: x.subCategory, productNumber: x.productNumber })} />)}
             </div>
         </div>
     )

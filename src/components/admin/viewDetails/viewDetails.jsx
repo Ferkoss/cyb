@@ -1,8 +1,11 @@
 import { useLocation } from "react-router-dom"
 import "./viewDetails.css"
+import { useContext, useState } from "react"
+import { ImageContext } from "../../../context/ImageContext"
 const ViewDetails = () => {
     const { state } = useLocation()
     const { saleOrder } = state || {}
+    const {insertImage,insertImageColor} = useContext(ImageContext)
     console.log(saleOrder)
 
 
@@ -28,8 +31,8 @@ const ViewDetails = () => {
 
         <div className="div-table-details">
             {saleOrder.saleOrders.map(x=><div key={x.id} className="table-details">
-                <img src={`${x.product.image}`} alt="" />
-                <p>{x.product.name} {x.productColor ? x.productColor.name:""}</p>
+                <img src={`${x.product.color ? insertImageColor(x.product,x.product.color) :insertImage(x.product)}`} alt="" />
+                <p>{x.product.subCategory +"/"+ (x.product.productNumber<10?"0"+x.product.productNumber:x.product.productNumber)} {x.product.color ? x.product.color:""}</p>
                 <p>{x.count}</p>
                 <p className="detail-subtotal">${x.subTotal}</p>
             </div>)}

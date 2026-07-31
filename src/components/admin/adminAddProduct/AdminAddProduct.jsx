@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { api_base_url } from "../../../api"
 import { MdCancel } from "react-icons/md";
 import "./adminAddProduct.css"
@@ -9,35 +9,29 @@ const AdminAddProduct = () => {
     const refModify = useRef(null)
     const refCategory = useRef(null)
     const refSize = useRef(null)
-    const [name, setName] = useState("")
     const [category, setCategory] = useState("")
-    const [size, setSize] = useState("")
-    const [price, setPrice] = useState(0)
+    const [subCategory, setSubCategory] = useState(0)
     const [colors, setColors] = useState([])
     const [colorImg, setColorImg] = useState("")
     const [img, setImg] = useState("")
     const [img64, setImg64] = useState(false)
-    const [touchButton,setTouchButton] = useState(false)
-
-    const handlerName = (e) => {
-        setName(e.target.value)
-    }
+    const [imgColor64, setImgColor64] = useState(false)
+    const [touchButton, setTouchButton] = useState(false)
+    const [selectSubCategory, setSelectSubCategory] = useState([])
+    const [selectColor, setSelectColor] = useState([])
+    const [actualColor, setActualColor] = useState({})
 
     const handlerCategory = (e) => {
         setCategory(e.target.value)
     }
 
-    const handlerSize = (e) => {
-        setSize(e.target.value)
-    }
 
-    const handlerPrice = (e) => {
-        setPrice(e.target.value)
-    }
+
+
 
     const handlerColors = () => {
-        setColors([...colors, { name: refColors.current.value, imageUrl: colorImg }])
-        refColors.current.value=""
+        setColors([...colors, { id: actualColor.id, name: actualColor.color, imageUrl: colorImg }])
+        refColors.current.value = ""
         setColorImg("")
         //console.log(colors)
     }
@@ -66,7 +60,7 @@ const AdminAddProduct = () => {
 
     }))*/
 
-    console.log(img)
+    //console.log(img)
 
 
     const dragDropColor = (e) => {
@@ -75,9 +69,9 @@ const AdminAddProduct = () => {
         if (files && files[0]) {
             const fileReader = new FileReader()
             fileReader.onload = (e) => {
-
-                setColorImg(e.target.result.includes("data:image/jpeg;base64,") ? e.target.result.slice(23) : e.target.result)
-                console.log("url: " + colorImg)
+                setImgColor64(e.target.result.includes("data:image"))
+                setColorImg(e.target.result.includes("data:image") ? e.target.result.split(",")[1] : e.target.result)
+                //console.log("url: " + colorImg)
                 //console.log("url    "+e.target.result)
             }
             fileReader.readAsDataURL(files[0])
@@ -97,20 +91,61 @@ const AdminAddProduct = () => {
         if (files && files[0]) {
             const fileReader = new FileReader()
             fileReader.onload = (e) => {
-                setImg64(e.target.result.includes("data:image/jpeg;base64,"))
-                setImg(e.target.result.includes("data:image/jpeg;base64,") ? e.target.result.slice(23) : e.target.result) //.slice(23,-1)
-                console.log(e.target.result)
-                console.log("url: " + img)
+                setImg64(e.target.result.includes("data:image"))
+                setImg(e.target.result.includes("data:image") ? e.target.result.split(",")[1] : e.target.result) //.slice(23,-1)
+                // console.log(e.target.result)
+                // console.log("url: " + img)
                 //console.log("url    "+e.target.result)
             }
             fileReader.readAsDataURL(files[0])
         }
     }
 
+    useEffect(() => {
+        fetch(`${api_base_url}/SubCategory/GetAllContextAddProduct`, {
+            headers: {
+                accept: "application/json"
+            }
+        })
+            .then((res) => {
+                if (!res.ok) {
+
+                    throw new Error("Error Inesperado")
+                }
+                return res.json()
+            })
+            .then((data) => {
+                console.log(data)
+                setSelectSubCategory(data.subCategories)
+                setSelectColor(data.color)
+            })
+            .catch(() => {
+                alert("Error sub categoria o color")
+            })
+
+    }, [])
+
+
     const handlerButtonAdd = async () => {
-        if(touchButton)
+        if (touchButton) {
+            alert("Espera")
             return;
+        }
         setTouchButton(true)
+
+
+        console.log({
+
+            subCategoryId: subCategory,
+            imageUrl: img,
+            colors: colors.map(x => ({
+                id: x.id,
+                imageUrl: x.imageUrl
+            }))
+
+        })
+
+
         try {
             const res = await fetch(`${api_base_url}/Product/Add`, {
                 headers: {
@@ -120,12 +155,12 @@ const AdminAddProduct = () => {
                 method: "POST",
                 body: JSON.stringify({
 
-                    name: name,
-                    category: category,
-                    size: size,
+                    subCategoryId: subCategory,
                     imageUrl: img,
-                    price: price,
-                    colors: colors
+                    colors: colors.map(x => ({
+                        id: x.id,
+                        imageUrl: x.imageUrl
+                    }))
 
                 })
             })
@@ -133,23 +168,42 @@ const AdminAddProduct = () => {
             if (!res.ok)
                 throw new Error("Error inesperado")
             const data = await res.text()
-            alert(data)
+            //alert(data)
 
-            setName("")
+
             setCategory("")
-            refCategory.current.value=""
-            setSize("")
-            refSize.current.value=""
-            setPrice(0)
-             setColors([])
-             setColorImg("")
-             setImg("")
-             setImg64(false)
+            //refCategory.current.value = ""
+
+            //refSize.current.value = ""
+
+            setColors([])
+            setColorImg("")
+            setImgColor64(false)
+            setImg("")
+            setImg64(false)
         }
-        catch (e) { console.log(e) }
+        catch (e) {
+            alert(e)
+            console.log(e)
+        }
         setTouchButton(false)
     }
     console.log(colors)
+
+
+    const setSubCategorySelect = (x) => {
+        setSubCategory(x.target.value)
+        console.log(x.target.value)
+    }
+
+    const setColorSelect = (x) => {
+        console.log(x.target.value)
+        const aux = JSON.parse(x.target.value)
+        setActualColor(aux)
+        console.log(actualColor)
+    }
+
+
     return (
         <div className="conteiner-add">
 
@@ -173,10 +227,7 @@ const AdminAddProduct = () => {
                 <div className="content-add-divs">
                     <div className="content-inputs-add">
 
-                        <div className="div-add">
-                            <label htmlFor="name">Nombre:</label>
-                            <input type="text" onChange={handlerName} value={name}/>
-                        </div>
+
 
                         <div className="div-add">
                             <label htmlFor="category">Categoria:</label>
@@ -195,26 +246,25 @@ const AdminAddProduct = () => {
                             </select>
                         </div>
 
+
+
                         <div className="div-add">
-                            <label htmlFor="category">Tamaño:</label>
-                            <select name="category" id="category" defaultValue="" ref={refSize} onChange={handlerSize}>
-                                <option value="" disabled >Ingrese su opcion</option>
-                                <option value="Mini por dos pares">Mini por dos pares</option>
-                                <option value="Chico">Chico</option>
-                                <option value="Mediano">Mediano</option>
-                                <option value="Grande">Grande</option>
+                            <label htmlFor="subCategory">Subcategoria:</label>
+                            <select name="subCategory" id="subCategory" onChange={setSubCategorySelect}>
+                                <option value="" disabled selected>Ingrese su opcion</option>
+                                {selectSubCategory.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
                             </select>
                         </div>
 
-                        <div className="div-add">
-                            <label htmlFor="price">Precio:</label>
-                            <input type="number" min={0} onChange={handlerPrice} value={price}/>
-                        </div>
+
 
                         <div className="div-add">
                             <label htmlFor="color">Color:</label>
-                            <input type="text" ref={refColors} />
-                            {colorImg == "" ? <div className="color-image div-image" onDragOver={dragOver} onDrop={dragDropColor}></div> : <img className="color-image" src={"data:image/jpeg;base64," + colorImg} onDragOver={dragOver} onDrop={dragDropColor} />}
+                            <select onChange={setColorSelect} ref={refColors} name="" id="">
+                                <option value="" disabled selected>Ingrese su opcion</option>
+                                {selectColor.map((x) => <option key={x.id} value={JSON.stringify({ id: x.id, color: x.name })}>{x.name}</option>)}
+                            </select>
+                            {colorImg == "" ? <div className="color-image div-image" onDragOver={dragOver} onDrop={dragDropColor}></div> : <img className="color-image" src={imgColor64 ? "data:image/jpeg;base64," + colorImg : colorImg} onDragOver={dragOver} onDrop={dragDropColor} />}
                             <button type="button" onClick={handlerColors}>Agregar Color</button>
                             <button type="button" onClick={handlerModifyColorsFlex}>Modificar Color</button>
                         </div>

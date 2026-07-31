@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import "./divProductColor.css"
-
+import { api_base_url } from "../../api";
 
 
 
 import { FaCartShopping } from "react-icons/fa6";
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
+import { ImageContext } from "../../context/ImageContext";
 //import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
 
@@ -15,8 +16,9 @@ import { CartContext } from "../../context/CartContext";
 
 
 
-const DivProductColor = ({ id, name, size, img,price,colors }) => {
-
+const DivProductColor = ({ id, subCategory,productNumber, size, img,price,colors }) => {
+    const {insertImageColor} = useContext(ImageContext)
+    const name = subCategory+"/"+ (productNumber<10?"0"+productNumber:productNumber)
     const [count, setCount] = useState(0)
     const [color, setColor] = useState("")
     const [colorImg,setColorImg]=useState("")
@@ -60,6 +62,8 @@ const DivProductColor = ({ id, name, size, img,price,colors }) => {
         setColorId(optionSelected.dataset.id)
     }
 
+    
+
 
     return (
         <div className="contenedor-articulo-prod">
@@ -75,7 +79,7 @@ const DivProductColor = ({ id, name, size, img,price,colors }) => {
                     <label htmlFor="color-Broche.nombre">Ingrese su color:  </label>
                     <select defaultValue="" name="color-Broche.nombre" id="color-Broche.nombre" onChange={handlerColor}>
                         <option value="" disabled >Ingrese su opcion</option>
-                        {colors.map((x)=><option key={x.id} value={x.name} data-img={x.image} data-id={x.id}>{x.name}</option>)}
+                        {colors.map((x)=><option key={x.id} value={x.name} data-img={insertImageColor({subCategory,productNumber},x.name)} data-id={x.id}>{x.name}</option>)}
                     </select>
                 </div>
                 <FaCartShopping className="cart-icon" onClick={handlerCart} />

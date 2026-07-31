@@ -6,15 +6,16 @@ import DivProductColor from "../divProductColor/DivProductColor"
 import DivProduct from "../divProduct/DivProduct"
 import { ProductContext } from "../../context/ProductContext"
 import { CgAdd } from "react-icons/cg";
+import { ImageContext } from "../../context/ImageContext"
 const MainProduct = ({ category }) => {
 
-
+    const {insertImage} = useContext(ImageContext)
     const { actualizateCart, actualizateLocalStorange, cart } = useContext(CartContext)
     const { productsStorange, setProductStorange } = useContext(ProductContext)
     const [products, setProducts] = useState([])
     const [productLoad, setProductLoad] = useState(true)
     const [first, setFirst] = useState(0)
-    const [last, setLast] = useState(20)
+    const [last, setLast] = useState(10)
     const [touchButton, setTouchButton] = useState(false)
 
 
@@ -49,30 +50,33 @@ const MainProduct = ({ category }) => {
         })
             .then((res) => {
                 if (!res.ok) {
+                    
                     throw new Error("Error Inesperado")
                 }
                 return res.json()
             })
             .then((res) => {
-                //console.log(res)
+                console.log(res)
+                
                 //if (!button)
                 setProductLoad(false)
-                setProducts([...products,...res.products])
-                console.log([...products,...res.products])
+                setProducts([...products, ...res])
+                
+                console.log([...products, ...res])
                 setFirst(last + 1)
-                setLast(last + 20)
+                setLast(last + 10)
                 console.log(first + "-" + last)
                 console.log(res)
-                if(!button && !sessionStorage.getItem("products"))
-                sessionStorage.setItem("products",JSON.stringify({
-                    category,
-                    products,
-                    first,
-                    last
-                }))
-                else if(!button)
-                    sessionStorage.setItem("products",JSON.stringify({
-                }))
+                if (!button && !sessionStorage.getItem("products"))
+                    sessionStorage.setItem("products", JSON.stringify({
+                        category,
+                        products,
+                        first,
+                        last
+                    }))
+                else if (!button)
+                    sessionStorage.setItem("products", JSON.stringify({
+                    }))
             })
             .catch((e) => {
                 console.log(e)
@@ -93,11 +97,11 @@ const MainProduct = ({ category }) => {
         //     setLast(session.last)
         // }
         // else
-            request(false)
+        request(false)
 
     }, [location.hash])
 
-
+    
 
     useEffect(actualizateLocalStorange, [cart])
 
@@ -110,12 +114,14 @@ const MainProduct = ({ category }) => {
                     !productLoad ? <>
                         <div className="contenedor-main-prod">
 
-                            {products.map(x => x.colors.length != 0 ? <DivProductColor key={x.id} id={x.id} name={x.name} size={x.size} colors={x.colors} img={x.imageUrl} price={x.price} /> : <DivProduct key={x.id} id={x.id} name={x.name} size={x.size} img={x.imageUrl} price={x.price} />)}
+                            {products.map(x => x.colors.length != 0
+                                ? <DivProductColor key={x.id} id={x.id} subCategory={x.subCategory} productNumber={x.productNumber} size={x.size} colors={x.colors} img={insertImage(x)} price={x.price} />
+                                : <DivProduct key={x.id} id={x.id} subCategory={x.subCategory} productNumber={x.productNumber} size={x.size} img={insertImage(x)} price={x.price} />)}
                         </div>
                         <button type="button" className="boton-agregar" onClick={() => { request(true) }}><CgAdd /></button>
                     </>
                         : <h2 className="mensaje-prod" >{products}</h2>
-                        //style={{ position: "absolute" }}
+                    //style={{ position: "absolute" }}
                     // <h2>Cargando...</h2>
                 }
             </div>

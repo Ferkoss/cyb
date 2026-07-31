@@ -1,51 +1,48 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { api_base_url } from "../../../api"
 import { MdCancel } from "react-icons/md";
+import { useLocation } from "react-router-dom";
 import "./adminUpdateProduct.css"
-import { useLocation, useNavigation } from "react-router-dom";
 
 const AdminUpdateProduct = () => {
 
-
-    const {state} = useLocation()
-    const {product} = state || {}
-    console.log(product)
+    const location=useLocation()
+    const { product } = location.state;
 
     const refColors = useRef(null)
     const refModify = useRef(null)
-
-    const [name, setName] = useState(product.name)
-    const [category, setCategory] = useState(product.category)
-    const [size, setSize] = useState(product.size)
-    const [price, setPrice] = useState(product.price)
-    const [colors, setColors] = useState(product.colors)
+    const refCategory = useRef(null)
+    const refSize = useRef(null)
+    const [category, setCategory] = useState("")
+    const [subCategory, setSubCategory] = useState(product.s)
+    const [colors, setColors] = useState([])
     const [colorImg, setColorImg] = useState("")
-    const [img, setImg] = useState(product.imageUrl)
+    const [img, setImg] = useState("")
+    const [img64, setImg64] = useState(false)
+    const [imgColor64, setImgColor64] = useState(false)
+    const [touchButton, setTouchButton] = useState(false)
+    const [selectSubCategory, setSelectSubCategory] = useState([])
+    const [selectColor, setSelectColor] = useState([])
+    const [actualColor, setActualColor] = useState({})
 
+    
 
-
-    const handlerName = (e) => {
-        setName(e.target.value)
-    }
+    console.log(product)
 
     const handlerCategory = (e) => {
         setCategory(e.target.value)
     }
 
-    const handlerSize = (e) => {
-        setSize(e.target.value)
-    }
 
-    const handlerPrice = (e) => {
-        setPrice(e.target.value)
-    }
+
+
 
     const handlerColors = () => {
-        setColors([...colors, { name: refColors.current.value, image: colorImg }])
-        refColors.current.value=""
+        setColors([...colors, { id: actualColor.id, name: actualColor.color, imageUrl: colorImg }])
+        refColors.current.value = ""
         setColorImg("")
-        //console.log(colors)
     }
+    
 
     const handlerModifyColorsFlex = () => {
         refModify.current.style.display = "flex"
@@ -71,7 +68,7 @@ const AdminUpdateProduct = () => {
 
     }))*/
 
-    console.log(colors)
+    //console.log(img)
 
 
     const dragDropColor = (e) => {
@@ -80,9 +77,9 @@ const AdminUpdateProduct = () => {
         if (files && files[0]) {
             const fileReader = new FileReader()
             fileReader.onload = (e) => {
-
-                setColorImg(e.target.result.includes("data:image/jpeg;base64,") ? e.target.result.slice(23) : e.target.result)
-                console.log("url: " + colorImg)
+                setImgColor64(e.target.result.includes("data:image"))
+                setColorImg(e.target.result.includes("data:image") ? e.target.result.split(",")[1] : e.target.result)
+                //console.log("url: " + colorImg)
                 //console.log("url    "+e.target.result)
             }
             fileReader.readAsDataURL(files[0])
@@ -102,15 +99,39 @@ const AdminUpdateProduct = () => {
         if (files && files[0]) {
             const fileReader = new FileReader()
             fileReader.onload = (e) => {
-                //setImg64(e.target.result.includes("data:image/jpeg;base64,"))
-                setImg(e.target.result.includes("data:image/jpeg;base64,") ? e.target.result/*.slice(23)*/ : e.target.result) //.slice(23,-1)
-                console.log(e.target.result)
-                console.log("url: " + img)
+                setImg64(e.target.result.includes("data:image"))
+                setImg(e.target.result.includes("data:image") ? e.target.result.split(",")[1] : e.target.result) //.slice(23,-1)
+                // console.log(e.target.result)
+                // console.log("url: " + img)
                 //console.log("url    "+e.target.result)
             }
             fileReader.readAsDataURL(files[0])
         }
     }
+
+    useEffect(() => {
+        fetch(`${api_base_url}/SubCategory/GetAllContextAddProduct`, {
+            headers: {
+                accept: "application/json"
+            }
+        })
+            .then((res) => {
+                if (!res.ok) {
+
+                    throw new Error("Error Inesperado")
+                }
+                return res.json()
+            })
+            .then((data) => {
+                console.log(data)
+                setSelectSubCategory(data.subCategories)
+                setSelectColor(data.color)
+            })
+            .catch(() => {
+                alert("Error sub categoria o color")
+            })
+
+    }, [])
 
     const handlerButtonAdd = async () => {
         try {
@@ -143,6 +164,21 @@ const AdminUpdateProduct = () => {
         catch (e) { console.log(e) }
     }
     console.log(colors)
+
+
+    const setSubCategorySelect = (x) => {
+        setSubCategory(x.target.value)
+        console.log(x.target.value)
+    }
+
+    const setColorSelect = (x) => {
+        console.log(x.target.value)
+        const aux = JSON.parse(x.target.value)
+        setActualColor(aux)
+        console.log(actualColor)
+    }
+
+
     return (
         <div className="conteiner-add">
 
@@ -151,8 +187,8 @@ const AdminUpdateProduct = () => {
                     <MdCancel className="modify-close" onClick={handlerModifyColorsNone} />
                     <div className="modify-color-div">
                         {colors.map(x =>
-                            <div className="article-modify" key={x.id}>
-                                <img src={x.image.includes("http") ? x.image : "data:image/jpeg;base64," + x.image} alt={x.name} />
+                            <div className="article-modify">
+                                <img src={x.imageUrl.includes("http") ? x.imageUrl : "data:image/jpeg;base64," + x.imageUrl} alt={x.name} />
                                 <p>{x.name}</p>
                                 <MdCancel className="product-close" onClick={() => { setColors(colors.filter(y => y.name != x.name)) }} />
                             </div>)}
@@ -166,14 +202,11 @@ const AdminUpdateProduct = () => {
                 <div className="content-add-divs">
                     <div className="content-inputs-add">
 
-                        <div className="div-add">
-                            <label htmlFor="name">Nombre:</label>
-                            <input type="text" onChange={handlerName} value={name}/>
-                        </div>
+
 
                         <div className="div-add">
                             <label htmlFor="category">Categoria:</label>
-                            <select name="category" id="category"  onChange={handlerCategory} defaultValue={category}>
+                            <select name="category" id="category" defaultValue="" ref={refCategory} onChange={handlerCategory}>
                                 <option value="" disabled >Ingrese su opcion</option>
                                 <option value="broches">Broches</option>
                                 <option value="set-infantil">Set infantil</option>
@@ -188,26 +221,25 @@ const AdminUpdateProduct = () => {
                             </select>
                         </div>
 
+
+
                         <div className="div-add">
-                            <label htmlFor="category">Tamaño:</label>
-                            <select name="category" id="category"  onChange={handlerSize} defaultValue={size}>
-                                <option value="" disabled >Ingrese su opcion</option>
-                                <option value="Mini por dos pares">Mini por dos pares</option>
-                                <option value="Chico">Chico</option>
-                                <option value="Mediano">Mediano</option>
-                                <option value="Grande">Grande</option>
+                            <label htmlFor="subCategory">Subcategoria:</label>
+                            <select name="subCategory" id="subCategory" onChange={setSubCategorySelect}>
+                                <option value="" disabled selected>Ingrese su opcion</option>
+                                {selectSubCategory.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
                             </select>
                         </div>
 
-                        <div className="div-add">
-                            <label htmlFor="price">Precio:</label>
-                            <input type="number" min={0} onChange={handlerPrice} value={price}/>
-                        </div>
+
 
                         <div className="div-add">
                             <label htmlFor="color">Color:</label>
-                            <input type="text" ref={refColors} />
-                            {colorImg == "" ? <div className="color-image div-image" onDragOver={dragOver} onDrop={dragDropColor}></div> : <img className="color-image" src={"data:image/jpeg;base64," + colorImg} onDragOver={dragOver} onDrop={dragDropColor} />}
+                            <select onChange={setColorSelect} ref={refColors} name="" id="">
+                                <option value="" disabled selected>Ingrese su opcion</option>
+                                {selectColor.map((x) => <option key={x.id} value={JSON.stringify({ id: x.id, color: x.name })}>{x.name}</option>)}
+                            </select>
+                            {colorImg == "" ? <div className="color-image div-image" onDragOver={dragOver} onDrop={dragDropColor}></div> : <img className="color-image" src={imgColor64 ? "data:image/jpeg;base64," + colorImg : colorImg} onDragOver={dragOver} onDrop={dragDropColor} />}
                             <button type="button" onClick={handlerColors}>Agregar Color</button>
                             <button type="button" onClick={handlerModifyColorsFlex}>Modificar Color</button>
                         </div>
@@ -216,11 +248,11 @@ const AdminUpdateProduct = () => {
 
 
                     </div>
-                    {img == "" ? <div className="image-add div-image" onDragOver={dragOver} onDrop={dragDrop}></div> : <img src={img} className="image-add" onDragOver={dragOver} onDrop={dragDrop} />}
+                    {img == "" ? <div className="image-add div-image" onDragOver={dragOver} onDrop={dragDrop}></div> : <img src={img64 ? "data:image/jpeg;base64," + img : img} className="image-add" onDragOver={dragOver} onDrop={dragDrop} />}
 
                 </div>
 
-                <button type="button" className="button-add" onClick={handlerButtonAdd}>Actualizar Producto</button>
+                <button type="button" className="button-add" onClick={handlerButtonAdd}>Agregar Producto</button>
             </div>
 
         </div>

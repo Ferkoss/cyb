@@ -9,10 +9,10 @@ import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 //import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
-const DivProduct=({ id, name, size, img,price })=>{
+const DivProduct=({ id, subCategory,productNumber, size, img,price })=>{
 
+    const name = subCategory+"/"+ (productNumber<10?"0"+productNumber:productNumber)
     const [count, setCount] = useState(0)
-
     const { cart,setCart,addToCart,actualizateLocalStorange } = useContext(CartContext)
     
     
