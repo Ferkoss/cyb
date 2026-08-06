@@ -44,13 +44,13 @@ const App = () => {
           <MainProduct category={1} key="broches" />
         </View>
     },
-    {
-      path: "/set-infantil",
-      element:
-        <View>
-          <MainProduct category={4} key="set-infantil" />
-        </View>
-    },
+    // {
+    //   path: "/set-infantil",
+    //   element:
+    //     <View>
+    //       <MainProduct category={4} key="set-infantil" />
+    //     </View>
+    // },
     {
       path: "/colitas-de-pelo",
       element:
@@ -73,40 +73,40 @@ const App = () => {
         </View>
     },
     {
-      path: "/carteras",
+      path: "/carteras-billeteras",
       element:
         <View>
-          <MainProduct category={"carteras"} key="carteras" />
+          <MainProduct category={"carteras-billeteras"} key="carteras-billeteras" />
         </View>
     },
-    {
-      path: "/billeteras-damas",
-      element:
-        <View>
-          <MainProduct category={"billeteras-damas"} key="billeteras-damas" />
-        </View>
-    },
-    {
-      path: "/billeteras-caballeros",
-      element:
-        <View>
-          <MainProduct category={"billeteras-caballeros"} key="billeteras-caballeros" />
-        </View>
-    },
-    {
-      path: "/mochilas",
-      element:
-        <View>
-          <MainProduct category={"mochilas"} key="mochilas" />
-        </View>
-    },
-    {
-      path: "/riñoneras-y-bandoleras",
-      element:
-        <View>
-          <MainProduct category={"riñoneras-y-bandoleras"} key="riñoneras-bandoleras" />
-        </View>
-    },
+    // {
+    //   path: "/billeteras-damas",
+    //   element:
+    //     <View>
+    //       <MainProduct category={"billeteras-damas"} key="billeteras-damas" />
+    //     </View>
+    // },
+    // {
+    //   path: "/billeteras-caballeros",
+    //   element:
+    //     <View>
+    //       <MainProduct category={"billeteras-caballeros"} key="billeteras-caballeros" />
+    //     </View>
+    // },
+    // {
+    //   path: "/mochilas",
+    //   element:
+    //     <View>
+    //       <MainProduct category={"mochilas"} key="mochilas" />
+    //     </View>
+    // },
+    // {
+    //   path: "/riñoneras-y-bandoleras",
+    //   element:
+    //     <View>
+    //       <MainProduct category={"riñoneras-y-bandoleras"} key="riñoneras-bandoleras" />
+    //     </View>
+    // },
 
     /*{
       path: "*",
