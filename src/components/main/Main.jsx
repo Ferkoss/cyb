@@ -18,10 +18,10 @@ useEffect(actualizateCart,[])
                 <img className="contenedor-articulo-inicio-img" src={imagenFondo} alt=""/>
                 <h3 className="contenedor-articulo-inicio-h3">Broches</h3>
             </div>
-            <div className="contenedor-articulo" onClick={()=>{navigate("/set-infantil")}}>
+            {/* <div className="contenedor-articulo" onClick={()=>{navigate("/set-infantil")}}>
                 <img className="contenedor-articulo-inicio-img" src={imagenFondo} alt=""/>
                 <h3 className="contenedor-articulo-inicio-h3">Set Infantil</h3>
-            </div>
+            </div> */}
             <div className="contenedor-articulo" onClick={()=>{navigate("/colitas-de-pelo")}}>
                 <img className="contenedor-articulo-inicio-img" src={imagenFondo} alt=""/>
                 <h3 className="contenedor-articulo-inicio-h3">Colitas de pelo</h3>
@@ -34,26 +34,26 @@ useEffect(actualizateCart,[])
                 <img className="contenedor-articulo-inicio-img" src={imagenFondo} alt=""/>
                 <h3 className="contenedor-articulo-inicio-h3">Tic Tac</h3>
             </div>
-            <div className="contenedor-articulo" onClick={()=>{navigate("/carteras")}}>
+            <div className="contenedor-articulo" onClick={()=>{navigate("/carteras-billeteras")}}>
                 <img className="contenedor-articulo-inicio-img" src={imagenFondo} alt=""/>
-                <h3 className="contenedor-articulo-inicio-h3">Carteras</h3>
+                <h3 className="contenedor-articulo-inicio-h3">Carteras y Billeteras</h3>
             </div>
-            <div className="contenedor-articulo" onClick={()=>{navigate("/billeteras-damas")}}>
+            {/* <div className="contenedor-articulo" onClick={()=>{navigate("/billeteras-damas")}}>
                 <img className="contenedor-articulo-inicio-img" src={imagenFondo} alt=""/>
                 <h3 className="contenedor-articulo-inicio-h3">Billeteras Damas</h3>
             </div>
             <div className="contenedor-articulo" onClick={()=>{navigate("/billeteras-caballeros")}}>
                 <img className="contenedor-articulo-inicio-img" src={imagenFondo} alt=""/>
                 <h3 className="contenedor-articulo-inicio-h3">Billeteras Caballeros</h3>
-            </div>
-            <div className="contenedor-articulo" onClick={()=>{navigate("/mochilas")}}>
+            </div> */}
+            {/* <div className="contenedor-articulo" onClick={()=>{navigate("/mochilas")}}>
                 <img className="contenedor-articulo-inicio-img" src={imagenFondo} alt=""/>
                 <h3 className="contenedor-articulo-inicio-h3">Mochilas</h3>
             </div>
             <div className="contenedor-articulo" onClick={()=>{navigate("/riñoneras-y-bandoleras")}}>
                 <img className="contenedor-articulo-inicio-img" src={imagenFondo} alt=""/>
                 <h3 className="contenedor-articulo-inicio-h3">Riñoneras y Bandoleras</h3>
-            </div>
+            </div> */}
 
         </div>
     </main>
