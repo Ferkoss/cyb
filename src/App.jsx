@@ -23,6 +23,7 @@ import Protected from "./components/admin/protected/Protected";
 import UpdatePrices from "./components/admin/adminUpdatePrices/UpdatePrices/UpdatePrices";
 import { ProductContextProvider } from "./context/ProductContext";
 import { ImageContextProvider } from "./context/ImageContext";
+import AdminAddSubCategory from "./components/admin/adminAddSubCategory/adminAddSubCategory";
 
 const App = () => {
 
@@ -160,6 +161,10 @@ const App = () => {
     {
       path: "/update-prices",
       element: <Protected><UpdatePrices /></Protected>
+    },
+    {
+      path:"/add-subcategory",
+      element: <Protected><AdminAddSubCategory/></Protected>
     }
 
 

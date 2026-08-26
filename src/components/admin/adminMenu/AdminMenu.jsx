@@ -17,6 +17,7 @@ const AdminMenu = () => {
 
                 <div className="buttons-menu">
                     <button type="button" onClick={() => { navigate("/selectSaleOrder") }}>Ver Pedidos</button>
+                    <button type="button" onClick={() => { navigate("/add-subcategory") }}>Agregar Subcategoria</button>
                 
                 </div>
 

@@ -1,31 +1,33 @@
-import { useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { api_base_url } from "../../../api"
 import { MdCancel } from "react-icons/md";
 import { useLocation } from "react-router-dom";
 import "./adminUpdateProduct.css"
+import { ImageContext } from "../../../context/ImageContext";
 
 const AdminUpdateProduct = () => {
 
-    const location=useLocation()
+    const location = useLocation()
     const { product } = location.state;
+    const { insertImage, insertImageColor } = useContext(ImageContext)
 
     const refColors = useRef(null)
     const refModify = useRef(null)
     const refCategory = useRef(null)
     const refSize = useRef(null)
-    const [category, setCategory] = useState("")
-    const [subCategory, setSubCategory] = useState(product.s)
-    const [colors, setColors] = useState([])
+    //const [category, setCategory] = useState("")
+    //const [subCategory, setSubCategory] = useState(product.s)
+    const [colors, setColors] = useState(product.colors.map(x => ({ id: x.id, name: x.name, imageUrl: insertImageColor(product, x.name) })))
     const [colorImg, setColorImg] = useState("")
-    const [img, setImg] = useState("")
+    const [img, setImg] = useState(insertImage(product))
     const [img64, setImg64] = useState(false)
     const [imgColor64, setImgColor64] = useState(false)
     const [touchButton, setTouchButton] = useState(false)
-    const [selectSubCategory, setSelectSubCategory] = useState([])
+    //const [selectSubCategory, setSelectSubCategory] = useState([])
     const [selectColor, setSelectColor] = useState([])
     const [actualColor, setActualColor] = useState({})
 
-    
+
 
     console.log(product)
 
@@ -42,7 +44,7 @@ const AdminUpdateProduct = () => {
         refColors.current.value = ""
         setColorImg("")
     }
-    
+
 
     const handlerModifyColorsFlex = () => {
         refModify.current.style.display = "flex"
@@ -110,7 +112,7 @@ const AdminUpdateProduct = () => {
     }
 
     useEffect(() => {
-        fetch(`${api_base_url}/SubCategory/GetAllContextAddProduct`, {
+        fetch(`${api_base_url}/Color/GetAll`, {
             headers: {
                 accept: "application/json"
             }
@@ -124,8 +126,7 @@ const AdminUpdateProduct = () => {
             })
             .then((data) => {
                 console.log(data)
-                setSelectSubCategory(data.subCategories)
-                setSelectColor(data.color)
+                setSelectColor(data)
             })
             .catch(() => {
                 alert("Error sub categoria o color")
@@ -135,8 +136,21 @@ const AdminUpdateProduct = () => {
 
     const handlerButtonAdd = async () => {
         try {
-            
-            const res = await fetch(`${api_base_url}/Product/Update/${product.id}`, {
+
+            /*
+            {
+                    "subCategoryId": 0,
+                    "imageUrl": "string",
+                    "colors": [
+                      {
+                        "id": 0,
+                        "imageUrl": "string"
+                      }
+                    ]
+            } 
+            */
+
+            const res = await fetch(`${api_base_url}/Product/UpdateImage/${product.id}`, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -144,14 +158,11 @@ const AdminUpdateProduct = () => {
                 method: "PUT",
                 body: JSON.stringify({
 
-                    
-                        name: name,
-                        category: category,
-                        size: size,
-                        imageUrl: img.includes("data:image/jpeg;base64,") ? img.slice(23) : img,
-                        price: price,
-                        colors: colors.map(x=>({name:x.name,imageUrl:x.image}))
-                      
+
+                    subCategoryId: 0,
+                    imageUrl: img.includes("data:image") ? img.split(",")[1] : img,
+                    colors: colors.map(x => ({ id: x.id, imageUrl: x.imageUrl }))
+
 
                 })
             })
@@ -161,7 +172,7 @@ const AdminUpdateProduct = () => {
             const data = await res.text()
             alert(data)
         }
-        catch (e) { console.log(e) }
+        catch (e) { console.error(e) }
     }
     console.log(colors)
 
@@ -200,11 +211,11 @@ const AdminUpdateProduct = () => {
 
             <div className="content-add">
                 <div className="content-add-divs">
-                    <div className="content-inputs-add">
+                    <div className="content-inputs-update">
 
 
 
-                        <div className="div-add">
+                        {/* <div className="div-add">
                             <label htmlFor="category">Categoria:</label>
                             <select name="category" id="category" defaultValue="" ref={refCategory} onChange={handlerCategory}>
                                 <option value="" disabled >Ingrese su opcion</option>
@@ -229,7 +240,7 @@ const AdminUpdateProduct = () => {
                                 <option value="" disabled selected>Ingrese su opcion</option>
                                 {selectSubCategory.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
                             </select>
-                        </div>
+                        </div> */}
 
 
 

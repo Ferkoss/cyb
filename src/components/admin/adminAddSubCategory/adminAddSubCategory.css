@@ -1,0 +1,28 @@
+.addSubCategory-container{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap:25px;
+}
+
+.addSubCategory-data{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
+.addSubCategory-button{
+    padding: 10px;
+    border-radius: 15px;
+    width: 100px;
+    border: 2px solid black;
+    transition: border-color .3s;
+}
+
+.addSubCategory-button:hover{
+    border-color: goldenrod;
+}

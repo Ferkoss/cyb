@@ -7,18 +7,22 @@ import { ImageContext } from "../../../context/ImageContext"
 
 const AdminSelectRestore = () => {
 
+
     const [data, setData] = useState([])
     const [nameFilter, setNameFilter] = useState([])
     const [categoryFilter, setCategoryFilter] = useState([])
+    const [subCategory, setSubCategory] = useState(0)
+    const [selectSubCategory, setSelectSubCategory] = useState([])
 
     const { insertImage, insertImageColor } = useContext(ImageContext)
 
-    const handlerNameFilter = (e) => {
+    const handlerNameFilter=(e)=>{
         setNameFilter(e.target.value)
     }
-    const handlerCategoryFilter = (e) => {
+    const handlerCategoryFilter=(e)=>{
         setCategoryFilter(e.target.value)
     }
+
 
     const handlerRestoreProduct = async (product) => {
         try {
@@ -41,7 +45,30 @@ const AdminSelectRestore = () => {
 
 
     useEffect(() => {
-        fetch(`${api_base_url}/Product/GetAllNoAvailable`,
+        fetch(`${api_base_url}/SubCategory/GetAll`, {
+            headers: {
+                accept: "application/json"
+            }
+        })
+            .then((res) => {
+                if (!res.ok) {
+
+                    throw new Error("Error Inesperado")
+                }
+                return res.json()
+            })
+            .then((data) => {
+                console.log(data)
+                setSelectSubCategory(data)
+            })
+            .catch(() => {
+                alert("Error sub categoria o color")
+            })
+
+    }, [])
+
+    const handlerBuscar = () => {
+        fetch(`${api_base_url}/Product/GetBySubCategoryRestore/${subCategory}`,
             {
                 headers: {
                     "Content-Type": "application/json",
@@ -61,18 +88,24 @@ const AdminSelectRestore = () => {
             .catch((e) => {
                 console.log(e)
             })
-    }, [])
+    }
 
+    const handlerChangeSubCategory = (e)=>{
+        setSubCategory(e.target.value)
+    }
+    
     return (
         <div className="container-select">
-            <div className="filter-select">
+
+            {/* <div className="filter-select">
                 <label htmlFor="filter-name">Filtrar por nombre</label>
                 <input type="text" name="filter-name" id="filter-name" onChange={handlerNameFilter} value={nameFilter} />
-            </div>
-            <div className="filter-select">
+            </div> */}
+
+            {/* <div className="filter-select">
                 <label htmlFor="filter-category">Filtrar por categoria</label>
                 <select name="" id="" onChange={handlerCategoryFilter}>
-                <option value=""  >Todas las opciones</option>
+                    <option value=""  >Todas las opciones</option>
                     <option value="broches">Broches</option>
                     <option value="set-infantil">Set infantil</option>
                     <option value="colitas-de-pelo">Colitas De Pelo</option>
@@ -84,10 +117,20 @@ const AdminSelectRestore = () => {
                     <option value="mochilas">Mochilas</option>
                     <option value="riñoneras-y-bandoleras">Riñoneras Y Bandoleras</option>
                 </select>
+            </div> */}
+
+            <div className="filter-select">
+                <label htmlFor="filter-category">Filtrar por subcategoria</label>
+                <select name="subCategory" id="subCategory" onChange={handlerChangeSubCategory}>
+                    <option value="" disabled selected>Ingrese su opcion</option>
+                    {selectSubCategory.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
+                </select>
             </div>
 
+            <button onClick={handlerBuscar}>Buscar</button>
+
             <div className="content-select">
-                {data.filter(x=>(x.subCategory+x.productNumber).includes(nameFilter) && x.category.includes(categoryFilter)).map((x, i) => <AdminViewProduct key={x.id} handler={() => { handlerRestoreProduct(x) }} name={x.subCategory + "/" + x.productNumber} category={x.category} size={x.size} price={x.price} img={insertImage({ subCategory: x.subCategory, productNumber: x.productNumber })} />)}
+                {data.map((x, i) => <AdminViewProduct key={x.id} handler={() => { handlerRestoreProduct(x) }} name={x.subCategory + "/" + x.productNumber} category={x.category} size={x.size} price={x.price} img={insertImage({ subCategory: x.subCategory, productNumber: x.productNumber })} />)}
             </div>
         </div>
     )
