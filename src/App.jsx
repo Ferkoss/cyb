@@ -63,21 +63,21 @@ const App = () => {
       path: "/vinchas",
       element:
         <View>
-          <MainProduct category={"vinchas"} key="vinchas" />
+          <MainProduct category={3} key="vinchas" />
         </View>
     },
     {
       path: "/tic-tac",
       element:
         <View>
-          <MainProduct category={"tic-tac"} key="tic-tac" />
+          <MainProduct category={4} key="tic-tac" />
         </View>
     },
     {
       path: "/carteras-billeteras",
       element:
         <View>
-          <MainProduct category={"carteras-billeteras"} key="carteras-billeteras" />
+          <MainProduct category={5} key="carteras-billeteras" />
         </View>
     },
     // {
