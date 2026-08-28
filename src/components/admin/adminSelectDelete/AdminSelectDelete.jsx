@@ -48,28 +48,28 @@ const AdminSelectDelete = () => {
     }
 
 
-    useEffect(() => {
-        fetch(`${api_base_url}/SubCategory/GetAll`, {
-            headers: {
-                accept: "application/json"
-            }
-        })
-            .then((res) => {
-                if (!res.ok) {
+    // useEffect(() => {
+    //     fetch(`${api_base_url}/SubCategory/GetAll`, {
+    //         headers: {
+    //             accept: "application/json"
+    //         }
+    //     })
+    //         .then((res) => {
+    //             if (!res.ok) {
 
-                    throw new Error("Error Inesperado")
-                }
-                return res.json()
-            })
-            .then((data) => {
-                console.log(data)
-                setSelectSubCategory(data)
-            })
-            .catch(() => {
-                alert("Error sub categoria o color")
-            })
+    //                 throw new Error("Error Inesperado")
+    //             }
+    //             return res.json()
+    //         })
+    //         .then((data) => {
+    //             console.log(data)
+    //             setSelectSubCategory(data)
+    //         })
+    //         .catch(() => {
+    //             alert("Error sub categoria o color")
+    //         })
 
-    }, [])
+    // }, [])
 
     const handlerBuscar = () => {
         fetch(`${api_base_url}/Product/GetBySubCategory/${subCategory}`,
@@ -98,6 +98,24 @@ const AdminSelectDelete = () => {
         setSubCategory(e.target.value)
     }
 
+    const handlerChangeCategory = async (e) => {
+        try {
+            const res = await fetch(`${api_base_url}/SubCategory/GetAllByCategory/${e.target.value}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+
+            })
+            if(!res.ok)
+                throw new Error("error de subcategoria")
+            const data = await res.json()
+            console.log(data)
+            setSelectSubCategory(data)
+        }
+        catch (err) { console.error(err) }
+    }
+
     return (
         <div className="container-select">
 
@@ -122,6 +140,18 @@ const AdminSelectDelete = () => {
                     <option value="riñoneras-y-bandoleras">Riñoneras Y Bandoleras</option>
                 </select>
             </div> */}
+
+            <div className="filter-select">
+                            <label htmlFor="category">Categoria:</label>
+                            <select name="category" id="category" defaultValue="" onChange={handlerChangeCategory}>
+                                <option value="" disabled >Ingrese su opcion</option>
+                                <option value="1">Broches</option>
+                                <option value="2">Colitas De Pelo</option>
+                                <option value="3">Vinchas</option>
+                                <option value="4">Tic Tac</option>
+                                <option value="5">Carteras-Billeteras</option>
+                            </select>
+                        </div>
 
             <div className="filter-select">
                 <label htmlFor="filter-category">Filtrar por subcategoria</label>

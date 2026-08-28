@@ -21,9 +21,7 @@ const AdminAddProduct = () => {
     const [selectColor, setSelectColor] = useState([])
     const [actualColor, setActualColor] = useState({})
 
-    const handlerCategory = (e) => {
-        setCategory(e.target.value)
-    }
+ 
 
 
 
@@ -102,7 +100,7 @@ const AdminAddProduct = () => {
     }
 
     useEffect(() => {
-        fetch(`${api_base_url}/SubCategory/GetAllContextAddProduct`, {
+        fetch(`${api_base_url}/Color/GetAll`, {
             headers: {
                 accept: "application/json"
             }
@@ -116,15 +114,32 @@ const AdminAddProduct = () => {
             })
             .then((data) => {
                 console.log(data)
-                setSelectSubCategory(data.subCategories)
-                setSelectColor(data.color)
+                //setSelectSubCategory(data.subCategories)
+                setSelectColor(data)
             })
             .catch(() => {
-                alert("Error sub categoria o color")
+                alert("Error color")
             })
 
     }, [])
 
+    const handlerChangeCategory = async (e) => {
+        try {
+            const res = await fetch(`${api_base_url}/SubCategory/GetAllByCategory/${e.target.value}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+
+            })
+            if(!res.ok)
+                throw new Error("error de subcategoria")
+            const data = await res.json()
+            console.log(data)
+            setSelectSubCategory(data)
+        }
+        catch (err) { console.error(err) }
+    }
 
     const handlerButtonAdd = async () => {
         if (touchButton) {
@@ -231,18 +246,13 @@ const AdminAddProduct = () => {
 
                         <div className="div-add">
                             <label htmlFor="category">Categoria:</label>
-                            <select name="category" id="category" defaultValue="" ref={refCategory} onChange={handlerCategory}>
+                            <select name="category" id="category" defaultValue="" ref={refCategory} onChange={handlerChangeCategory}>
                                 <option value="" disabled >Ingrese su opcion</option>
-                                <option value="broches">Broches</option>
-                                <option value="set-infantil">Set infantil</option>
-                                <option value="colitas-de-pelo">Colitas De Pelo</option>
-                                <option value="vinchas">Vinchas</option>
-                                <option value="tic-tac">Tic Tac</option>
-                                <option value="carteras">Carteras</option>
-                                <option value="billeteras-damas">Billeteras Damas</option>
-                                <option value="billeteras-caballeros">Billeteras Caballeros</option>
-                                <option value="mochilas">Mochilas</option>
-                                <option value="riñoneras-y-bandoleras">Riñoneras Y Bandoleras</option>
+                                <option value="1">Broches</option>
+                                <option value="2">Colitas De Pelo</option>
+                                <option value="3">Vinchas</option>
+                                <option value="4">Tic Tac</option>
+                                <option value="5">Carteras-Billeteras</option>
                             </select>
                         </div>
 
