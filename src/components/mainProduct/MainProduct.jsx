@@ -15,7 +15,7 @@ const MainProduct = ({ category }) => {
     const [products, setProducts] = useState([])
     const [productLoad, setProductLoad] = useState(true)
     const [first, setFirst] = useState(0)
-    const [last, setLast] = useState(10)
+    const last = 10
     const [touchButton, setTouchButton] = useState(false)
 
 
@@ -63,8 +63,8 @@ const MainProduct = ({ category }) => {
                 setProducts([...products, ...res])
                 
                 console.log([...products, ...res])
-                setFirst(last + 1)
-                setLast(last + 10)
+                setFirst(prevFirst=>prevFirst+last)
+                
                 console.log(first + "-" + last)
                 console.log(res)
                 if (!button && !sessionStorage.getItem("products"))
