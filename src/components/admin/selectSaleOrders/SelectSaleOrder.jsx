@@ -2,14 +2,17 @@ import { useEffect, useState } from "react"
 import { api_base_url } from "../../../api"
 import "./selectSaleOrders.css"
 import { useNavigate } from "react-router-dom"
+import { CgAdd } from "react-icons/cg";
 const SelectSaleOrder = () => {
 
     const navigate = useNavigate()
 
     const [data, setData] = useState([])
+    const [skip,setSkip] = useState(0)
+    const take = 5
 
-    useEffect(() => {
-        fetch(`${api_base_url}/SaleOrder/GetAll`, {
+    const getSaleOrders = () => {
+        fetch(`${api_base_url}/SaleOrder/SaleOrderRangeData/${skip}/${take}`, {
             headers: {
                 "content-type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -21,11 +24,15 @@ const SelectSaleOrder = () => {
                 return res.json()
             })
             .then((resData) => {
-                setData(resData)
-
+                console.log(resData)
+                setData([...data,...resData])
+                setSkip(skip+take)
+                
             })
             .catch((e) => { console.log(e) })
-    }, [])
+    }
+
+    useEffect(getSaleOrders, [])
 
     const handlerSaleOrder = (saleOrder) => {
         navigate("/viewDetails",{state:{saleOrder}})
@@ -47,7 +54,7 @@ const SelectSaleOrder = () => {
             <p>{x.date.slice(0,10)}</p>
 
         </div>)}
-
+        <button type="button" className="boton-agregar" onClick={getSaleOrders}><CgAdd /></button>
     </div>
 
 }
