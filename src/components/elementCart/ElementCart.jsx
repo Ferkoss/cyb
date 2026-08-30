@@ -33,10 +33,10 @@ const ElementCart = ({name,img,price,count}) => {
             <input type="number" min="1" value={countProd} onChange={handlerModifyCount} />
 
         </div>
-        {/*<div className="precio">
-            <p>Precio Total</p>
+        <div className="precio">
+            <p>Precio</p>
             <p>${totalProd}</p>
-        </div>*/}
+        </div>
         <div className="cerrar-articulo" id="borrar-codigo1"><MdCancel className="icon-close" onClick={handlerCancelElementCart}/></div>
     </div>
 }

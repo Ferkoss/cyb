@@ -6,6 +6,11 @@ import { MdCancel } from "react-icons/md";
 import { useNavigate } from "react-router-dom"
 import emailjs from '@emailjs/browser';
 const CartShadow = ({ view, setView,total }) => {
+
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
     const {cart,actualizateCart,setCart} = useContext(CartContext)
     const [name, setName] = useState("")
     const [subName, setSubName] = useState("")
@@ -41,7 +46,7 @@ const CartShadow = ({ view, setView,total }) => {
     const handlerChangeLocality = (e) => {
         setLocality(e.target.value)
     }
-
+    
     console.log(cart.map(x=>`Nombre: ${x.name}\nCantidad: ${x.count}\nPrecio: $${x.price*x.count}`).join("\n---------------------------------------------------\n"))
 
     const handlerSendData = async (e) => {
@@ -91,7 +96,7 @@ const CartShadow = ({ view, setView,total }) => {
 
         //emailjs.send("service_rqfikac","template_gj0miaq",dataMail);
   
-        emailjs.send("service_rqfikac","template_gj0miaq",{
+        emailjs.send(serviceId,templateId,{
             nombre:name,
             apellido:subName,
             telefono:tel,
@@ -101,8 +106,9 @@ const CartShadow = ({ view, setView,total }) => {
             +`\n\n`
             ,
             reply_to: "cybproductosrosario@gmail.com",
+            total:total
             },
-            "_B3_jwoNht_6X9doT"
+            publicKey
         );
 //Total: $${total}
         setViewContent(false)

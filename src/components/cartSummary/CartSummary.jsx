@@ -12,7 +12,7 @@ const CartSummary = () => {
         <div className="cabecera">
             <h3 className="nombre">Nombre</h3>
             <h3 className="cantidad">Cantidad</h3>
-            {/*<h3 className="precio">Precio Final</h3>*/}
+            <h3 className="precio">Precio Final</h3>
         </div>
         <div className="div-articulos" id="cont-articulos">
 
@@ -24,14 +24,14 @@ const CartSummary = () => {
             {cart.map((x)=><article key={x.id}>
                 <p className="nombre">{x.name}</p>
                 <p className="cantidad">{x.count}</p>
-                {/*<p className="precio">${x.price*x.count}</p>*/}
+                <p className="precio">${x.price*x.count}</p>
             </article>)}
 
         </div>
-        {/*<div className="pie-main">
+        <div className="pie-main">
             <b>Total:</b>
             <p id="total">${total}</p>
-        </div>*/}
+        </div>
         <div className="div-boton"><button id="botonSiguiente" onClick={()=>{setView(true)}}>Siguiente</button></div>
     </main></>
         

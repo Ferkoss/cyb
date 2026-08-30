@@ -57,10 +57,15 @@ article p{
 */
 
 .precio{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 1rem;
     text-align: start;
     justify-self: center;
     grid-column-start:3 ;
     min-width: 100px;
+    
 }
 
 .cantidad{
@@ -85,7 +90,7 @@ align-self: center;
 text-align: start;
 justify-self: center;
 font-weight: bold;
-
+font-size: 1.5em;
 }
 
 
@@ -98,7 +103,7 @@ font-weight: bold;
     grid-column-start: 1;
     justify-self: center;
     align-self: end;
-    
+    font-size: 1.5em;
 }
 
 .div-boton{
