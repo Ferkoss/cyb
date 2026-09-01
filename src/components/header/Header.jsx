@@ -119,15 +119,10 @@ const total = cart.reduce((acu,x)=>acu+x.price*x.count,0)
             <ul className="menu-ul" id="menu-ul"  style={{display:viewMenu?"flex":"none"}}>
                 <div id="cerrar-menu" onClick={handlerCloseMenu}><MdCancel /></div>
                 <li className="menu-li"><a onClick={()=>{navigate("/broches")}}>Broches</a></li>
-                <li className="menu-li"><a onClick={()=>{navigate("/set-infantil")}}>Set Infantil</a></li>
                 <li className="menu-li"><a onClick={()=>{navigate("/colitas-de-pelo")}}>Colitas de pelo</a></li>
                 <li className="menu-li"><a onClick={()=>{navigate("/vinchas")}}>Vinchas</a></li>
                 <li className="menu-li"><a onClick={()=>{navigate("/tic-tac")}}>Tic Tac</a></li>
-                <li className="menu-li"><a onClick={()=>{navigate("/carteras")}}>Carteras</a></li>
-                <li className="menu-li"><a onClick={()=>{navigate("/billeteras-damas")}}>Billeteras Damas</a></li>
-                <li className="menu-li"><a onClick={()=>{navigate("/billeteras-caballeros")}}>Billeteras Caballeros</a></li>
-                <li className="menu-li"><a onClick={()=>{navigate("/mochilas")}}>Mochilas</a></li>
-                <li className="menu-li"><a onClick={()=>{navigate("/riñoneras-y-bandoleras")}}>Riñoneras y Bandoleras</a></li>
+                <li className="menu-li"><a onClick={()=>{navigate("/carteras-billeteras")}}>Carteras y Billeteras</a></li>
             </ul>
             <div className="restante-menu" id="restante-menu"  style={{display:viewMenu?"flex":"none"}} onClick={handlerCloseMenu}></div>
         </nav>

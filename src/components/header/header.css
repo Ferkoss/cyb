@@ -34,6 +34,7 @@ header {
 .imagen-principal {
     cursor: pointer;
     max-width: 140px;
+    width: 80%;
 }
 
 nav {
@@ -54,8 +55,8 @@ nav {
     list-style: none;
     display: flex;
     width: 100%;
-    justify-content: space-evenly;
-    gap: 10px;
+    justify-content: space-around;
+    
 }
 
 .restante-menu{
@@ -249,6 +250,7 @@ nav {
     header {
         grid-template-columns: repeat(4, auto);
         grid-template-rows: 100%;
+        
     }
 
 

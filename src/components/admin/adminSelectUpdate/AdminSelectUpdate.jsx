@@ -1,127 +1,22 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { api_base_url } from "../../../api"
 import AdminViewProduct from "../adminViewProduct/adminViewProduct"
-import "../adminSelectCss/Select.css"
-import { useContext } from "react"
 import { ImageContext } from "../../../context/ImageContext"
+import AdminSelect from "../adminSelectCss/AdminSelect"
 import { useNavigate } from "react-router-dom"
 
 
 const AdminSelectUpdate = () => {
+
     const navigate = useNavigate()
-    const [data, setData] = useState([])
-    const [nameFilter, setNameFilter] = useState([])
-    const [categoryFilter, setCategoryFilter] = useState([])
-    const [subCategory, setSubCategory] = useState(0)
-    const [selectSubCategory, setSelectSubCategory] = useState([])
 
-    const { insertImage, insertImageColor } = useContext(ImageContext)
-
-    const handlerNameFilter = (e) => {
-        setNameFilter(e.target.value)
-    }
-    const handlerCategoryFilter = (e) => {
-        setCategoryFilter(e.target.value)
-    }
-
-    const handlerSubCategory = (e) => {
-        setSubCategory(e.target.value)
-    }
-
+    const [data, setData]=useState([])
 
     const handlerUpdateProduct=(product)=>{
         navigate("/admin-update",{state:{product}})
     }
 
-useEffect(() => {
-        fetch(`${api_base_url}/SubCategory/GetAll`, {
-            headers: {
-                accept: "application/json"
-            }
-        })
-            .then((res) => {
-                if (!res.ok) {
+    return <AdminSelect func={handlerUpdateProduct} data={data} setData={setData}/>
 
-                    throw new Error("Error Inesperado")
-                }
-                return res.json()
-            })
-            .then((data) => {
-                console.log(data)
-                setSelectSubCategory(data)
-            })
-            .catch(() => {
-                alert("Error sub categoria o color")
-            })
-
-    }, [])
-
-    const handlerBuscar = () => {
-        fetch(`${api_base_url}/Product/GetBySubCategory/${subCategory}`,
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
-                }
-            }
-        )
-            .then((res) => {
-                if (!res.ok)
-                    throw new Error("Error inesperado")
-                return res.json()
-            })
-            .then((res) => {
-                setData(res)
-                console.log(res)
-            })
-            .catch((e) => {
-                console.log(e)
-            })
-    }
-
-    const handlerChangeSubCategory = (e)=>{
-        setSubCategory(e.target.value)
-    }
-
-    return (
-        <div className="container-select">
-
-            {/* <div className="filter-select">
-                <label htmlFor="filter-name">Filtrar por nombre</label>
-                <input type="text" name="filter-name" id="filter-name" onChange={handlerNameFilter} value={nameFilter} />
-            </div> */}
-
-            {/* <div className="filter-select">
-                <label htmlFor="filter-category">Filtrar por categoria</label>
-                <select name="" id="" onChange={handlerCategoryFilter}>
-                    <option value=""  >Todas las opciones</option>
-                    <option value="broches">Broches</option>
-                    <option value="set-infantil">Set infantil</option>
-                    <option value="colitas-de-pelo">Colitas De Pelo</option>
-                    <option value="vinchas">Vinchas</option>
-                    <option value="tic-tac">Tic Tac</option>
-                    <option value="carteras">Carteras</option>
-                    <option value="billeteras-damas">Billeteras Damas</option>
-                    <option value="billeteras-caballeros">Billeteras Caballeros</option>
-                    <option value="mochilas">Mochilas</option>
-                    <option value="riñoneras-y-bandoleras">Riñoneras Y Bandoleras</option>
-                </select>
-            </div> */}
-
-            <div className="filter-select">
-                <label htmlFor="filter-category">Filtrar por subcategoria</label>
-                <select name="subCategory" id="subCategory" onChange={handlerChangeSubCategory}>
-                    <option value="" disabled selected>Ingrese su opcion</option>
-                    {selectSubCategory.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
-                </select>
-            </div>
-
-            <button onClick={handlerBuscar}>Buscar</button>
-
-            <div className="content-select">
-                {data.map((x, i) => <AdminViewProduct key={x.id} handler={() => { handlerUpdateProduct(x) }} name={x.subCategory + "/" + x.productNumber} category={x.category} size={x.size} price={x.price} img={insertImage({ subCategory: x.subCategory, productNumber: x.productNumber })} />)}
-            </div>
-        </div>
-    )
 }
 export default AdminSelectUpdate

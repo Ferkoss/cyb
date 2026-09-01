@@ -135,46 +135,44 @@ const AdminUpdateProduct = () => {
     }, [])
 
     const handlerButtonAdd = async () => {
-        try {
+    try {
+        const body = {
+            subCategoryId: Number(product.subCategoryId),
+            imageUrl: img,
+            colors: colors.map(x => ({
+                id: x.id,
+                imageUrl: x.imageUrl
+            }))
+        }
 
-            /*
+        console.log("BODY:", body)
+        console.log("JSON:", JSON.stringify(body))
+
+        const res = await fetch(
+            `${api_base_url}/Product/UpdateImage/${product.id}`,
             {
-                    "subCategoryId": 0,
-                    "imageUrl": "string",
-                    "colors": [
-                      {
-                        "id": 0,
-                        "imageUrl": "string"
-                      }
-                    ]
-            } 
-            */
-
-            const res = await fetch(`${api_base_url}/Product/UpdateImage/${product.id}`, {
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 },
-                method: "PUT",
-                body: JSON.stringify({
+                body: JSON.stringify(body)
+            }
+        )
 
-
-                    subCategoryId: 0,
-                    imageUrl: img.includes("data:image") ? img.split(",")[1] : img,
-                    colors: colors.map(x => ({ id: x.id, imageUrl: x.imageUrl }))
-
-
-                })
-            })
-
-            if (!res.ok)
-                throw new Error("Error inesperado")
-            const data = await res.text()
-            alert(data)
+        if (!res.ok) {
+            const error = await res.text()
+            console.error(error)
+            throw new Error("Error inesperado")
         }
-        catch (e) { console.error(e) }
+
+        const data = await res.text()
+        alert(data)
+
+    } catch (e) {
+        console.error(e)
     }
-    console.log(colors)
+}
 
 
     const setSubCategorySelect = (x) => {
