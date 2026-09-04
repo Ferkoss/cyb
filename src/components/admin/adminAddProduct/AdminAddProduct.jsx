@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { api_base_url } from "../../../api"
 import { MdCancel } from "react-icons/md";
 import "./adminAddProduct.css"
+import { Container,Row,Col,Form,Button } from "react-bootstrap";
 
 const AdminAddProduct = () => {
 
@@ -219,78 +220,238 @@ const AdminAddProduct = () => {
     }
 
 
-    return (
-        <div className="conteiner-add">
+    return (<>
+    {/* MODIFICAR COLORES */}
+    <div className="modify-color-shadow" ref={refModify}>
+        <div className="modify-color">
+            <MdCancel
+                className="modify-close"
+                onClick={handlerModifyColorsNone}
+            />
 
-            <div className="modify-color-shadow" ref={refModify}>
-                <div className="modify-color">
-                    <MdCancel className="modify-close" onClick={handlerModifyColorsNone} />
-                    <div className="modify-color-div">
-                        {colors.map(x =>
-                            <div className="article-modify">
-                                <img src={x.imageUrl.includes("http") ? x.imageUrl : "data:image/jpeg;base64," + x.imageUrl} alt={x.name} />
-                                <p>{x.name}</p>
-                                <MdCancel className="product-close" onClick={() => { setColors(colors.filter(y => y.name != x.name)) }} />
-                            </div>)}
+            <div className="modify-color-div">
+                {colors.map(x =>
+                    <div className="article-modify" key={x.name}>
+                        <img
+                            src={
+                                x.imageUrl.includes("http")
+                                    ? x.imageUrl
+                                    : "data:image/jpeg;base64," + x.imageUrl
+                            }
+                            alt={x.name}
+                        />
+
+                        <p>{x.name}</p>
+
+                        <MdCancel
+                            className="product-close"
+                            onClick={() =>
+                                setColors(
+                                    colors.filter(y => y.name !== x.name)
+                                )
+                            }
+                        />
                     </div>
-                </div>
+                )}
             </div>
-
-
-
-            <div className="content-add">
-                <div className="content-add-divs">
-                    <div className="content-inputs-add">
-
-
-
-                        <div className="div-add">
-                            <label htmlFor="category">Categoria:</label>
-                            <select name="category" id="category" defaultValue="" ref={refCategory} onChange={handlerChangeCategory}>
-                                <option value="" disabled >Ingrese su opcion</option>
-                                <option value="1">Broches</option>
-                                <option value="2">Colitas De Pelo</option>
-                                <option value="3">Vinchas</option>
-                                <option value="4">Tic Tac</option>
-                                <option value="5">Carteras-Billeteras</option>
-                            </select>
-                        </div>
-
-
-
-                        <div className="div-add">
-                            <label htmlFor="subCategory">Subcategoria:</label>
-                            <select name="subCategory" id="subCategory" onChange={setSubCategorySelect}>
-                                <option value="" disabled selected>Ingrese su opcion</option>
-                                {selectSubCategory.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
-                            </select>
-                        </div>
-
-
-
-                        <div className="div-add">
-                            <label htmlFor="color">Color:</label>
-                            <select onChange={setColorSelect} ref={refColors} name="" id="">
-                                <option value="" disabled selected>Ingrese su opcion</option>
-                                {selectColor.map((x) => <option key={x.id} value={JSON.stringify({ id: x.id, color: x.name })}>{x.name}</option>)}
-                            </select>
-                            {colorImg == "" ? <div className="color-image div-image" onDragOver={dragOver} onDrop={dragDropColor}></div> : <img className="color-image" src={imgColor64 ? "data:image/jpeg;base64," + colorImg : colorImg} onDragOver={dragOver} onDrop={dragDropColor} />}
-                            <button type="button" onClick={handlerColors}>Agregar Color</button>
-                            <button type="button" onClick={handlerModifyColorsFlex}>Modificar Color</button>
-                        </div>
-
-
-
-
-                    </div>
-                    {img == "" ? <div className="image-add div-image" onDragOver={dragOver} onDrop={dragDrop}></div> : <img src={img64 ? "data:image/jpeg;base64," + img : img} className="image-add" onDragOver={dragOver} onDrop={dragDrop} />}
-
-                </div>
-
-                <button type="button" className="button-add" onClick={handlerButtonAdd}>Agregar Producto</button>
-            </div>
-
         </div>
-    )
+    </div>
+        <Container className="py-4">
+
+
+
+    {/* CONTENIDO PRINCIPAL */}
+    <Row className="g-4">
+
+        {/* DATOS DEL PRODUCTO */}
+        <Col xs={12} lg={7}>
+
+            <div className="p-3 border rounded">
+
+                {/* CATEGORÍA */}
+                <Form.Group className="mb-3">
+                    <Form.Label htmlFor="category">
+                        Categoría:
+                    </Form.Label>
+
+                    <Form.Select
+                        name="category"
+                        id="category"
+                        defaultValue=""
+                        ref={refCategory}
+                        onChange={handlerChangeCategory}
+                    >
+                        <option value="" disabled>
+                            Ingrese su opción
+                        </option>
+
+                        <option value="1">Broches</option>
+                        <option value="2">Colitas De Pelo</option>
+                        <option value="3">Vinchas</option>
+                        <option value="4">Tic Tac</option>
+                        <option value="5">Carteras-Billeteras</option>
+                    </Form.Select>
+                </Form.Group>
+
+
+                {/* SUBCATEGORÍA */}
+                <Form.Group className="mb-3">
+                    <Form.Label htmlFor="subCategory">
+                        Subcategoría:
+                    </Form.Label>
+
+                    <Form.Select
+                        name="subCategory"
+                        id="subCategory"
+                        defaultValue=""
+                        onChange={setSubCategorySelect}
+                    >
+                        <option value="" disabled>
+                            Ingrese su opción
+                        </option>
+
+                        {selectSubCategory.map(x =>
+                            <option
+                                key={x.id}
+                                value={x.id}
+                            >
+                                {x.name}
+                            </option>
+                        )}
+                    </Form.Select>
+                </Form.Group>
+
+
+                {/* COLOR */}
+                <Form.Group className="mb-3">
+
+                    <Form.Label htmlFor="color">
+                        Color:
+                    </Form.Label>
+
+                    <Form.Select
+                        ref={refColors}
+                        name="color"
+                        id="color"
+                        defaultValue=""
+                        onChange={setColorSelect}
+                    >
+                        <option value="" disabled>
+                            Ingrese su opción
+                        </option>
+
+                        {selectColor.map(x =>
+                            <option
+                                key={x.id}
+                                value={JSON.stringify({
+                                    id: x.id,
+                                    color: x.name
+                                })}
+                            >
+                                {x.name}
+                            </option>
+                        )}
+                    </Form.Select>
+
+
+                    {/* IMAGEN DEL COLOR */}
+                    <div className="mt-3">
+
+                        {colorImg === "" ? (
+                            <div
+                                className="color-image div-image"
+                                onDragOver={dragOver}
+                                onDrop={dragDropColor}
+                            />
+                        ) : (
+                            <img
+                                className="color-image"
+                                src={
+                                    imgColor64
+                                        ? "data:image/jpeg;base64," + colorImg
+                                        : colorImg
+                                }
+                                onDragOver={dragOver}
+                                onDrop={dragDropColor}
+                                alt="Color"
+                            />
+                        )}
+
+                    </div>
+
+
+                    {/* BOTONES */}
+                    <div className="d-flex gap-2 mt-3 flex-wrap">
+
+                        <Button
+                            type="button"
+                            variant="primary"
+                            onClick={handlerColors}
+                        >
+                            Agregar Color
+                        </Button>
+
+                        <Button
+                            type="button"
+                            variant="secondary"
+                            onClick={handlerModifyColorsFlex}
+                        >
+                            Modificar Color
+                        </Button>
+
+                    </div>
+                   
+                </Form.Group>
+
+            </div>
+
+        </Col>
+
+
+        {/* IMAGEN PRINCIPAL */}
+        <Col xs={12} lg={5}>
+
+            <div className="h-100 d-flex justify-content-center align-items-center">
+
+                {img === "" ? (
+                    <div
+                        className="image-add div-image w-100"
+                        onDragOver={dragOver}
+                        onDrop={dragDrop}
+                    />
+                ) : (
+                    <img
+                        src={
+                            img64
+                                ? "data:image/jpeg;base64," + img
+                                : img
+                        }
+                        className="image-add img-fluid"
+                        onDragOver={dragOver}
+                        onDrop={dragDrop}
+                        alt="Producto"
+                    />
+                )}
+
+            </div>
+
+        </Col>
+    
+
+    </Row>
+     {/* BOTÓN AGREGAR */}
+        <Button
+            type="button"
+            className="button-add"
+            variant="success"
+            onClick={handlerButtonAdd}
+        >
+            Agregar Producto
+        </Button>
+
+    
+
+</Container>
+    </>)
 }
 export default AdminAddProduct

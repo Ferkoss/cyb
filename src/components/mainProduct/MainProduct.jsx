@@ -118,7 +118,7 @@ const MainProduct = ({ category }) => {
                                 ? <DivProductColor key={x.id} id={x.id} subCategory={x.subCategory} productNumber={x.productNumber} size={x.size} colors={x.colors} img={insertImage(x)} price={x.price} />
                                 : <DivProduct key={x.id} id={x.id} subCategory={x.subCategory} productNumber={x.productNumber} size={x.size} img={insertImage(x)} price={x.price} />)}
                         </div>
-                        <button type="button" className="boton-agregar" onClick={() => { request(true) }}><CgAdd /></button>
+                        <button type="button" className="boton-agregar-prod" onClick={() => { request(true) }}><CgAdd /></button>
                     </>
                         : <h2 className="mensaje-prod" >{products}</h2>
                     //style={{ position: "absolute" }}

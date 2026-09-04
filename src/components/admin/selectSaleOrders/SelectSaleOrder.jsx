@@ -54,7 +54,7 @@ const SelectSaleOrder = () => {
             <p>{x.date.slice(0,10)}</p>
 
         </div>)}
-        <button type="button" className="boton-agregar" onClick={getSaleOrders}><CgAdd /></button>
+        <button type="button" className="boton-agregar-prod" onClick={getSaleOrders}><CgAdd /></button>
     </div>
 
 }

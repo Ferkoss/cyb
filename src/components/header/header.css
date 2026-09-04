@@ -1,4 +1,4 @@
-header {
+/* header {
     background-color: black;
     height: 200px;
     width: 100%;
@@ -25,7 +25,7 @@ header {
 
 .titulo {
     color: white;
-    /*color: #e5e0d8;*/
+    /*color: #e5e0d8;
     cursor: pointer;
     width: 100%;
     text-align: center;
@@ -104,10 +104,10 @@ nav {
 
 
 
+*/
 
 
-
-#carrito-sombra {
+ #carrito-sombra {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -240,10 +240,10 @@ nav {
 .contenedor-precios div p {
     text-align: center;
     font-size: 20px;
-}
+} 
 
 
-
+/*
 
 @media (max-width: 900px) {
 
@@ -311,6 +311,12 @@ nav {
         font-size: 20px;
         border-bottom: 1px solid black;
     }
+
+    .menu-li a{
+        color: white;
+        
+    }
+
     .carrito-articulo{
         height: 400px;
         flex-direction: column;
@@ -357,4 +363,187 @@ nav {
         font-size: 15px;
     }
 
+}
+ */
+
+
+.header {
+    width: 100%;
+    background-color: black;
+}
+
+/*
+header {
+    background-color: black;
+    height: 200px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 3fr 1fr;
+    align-items: center;
+    justify-items: center;
+    justify-content: space-evenly;
+
+}
+
+*/
+
+
+
+
+
+.header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.header-element {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    width: 100%;
+}
+
+.imagen-principal {
+    /* width: 175px; 
+    height: 175px;  */
+    width: 50%;
+    /* min-width: 100px; */
+    object-fit: contain;
+    cursor: pointer;
+    margin: 0;
+}
+
+.titulo {
+    color: white;
+    font-family: Georgia, serif;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0;
+    font-size: clamp(15px, 4cqw, 3rem);
+
+}
+
+.icono-compra {
+    color: white;
+    font-size: 32px;
+    cursor: pointer;
+}
+
+.menu-navbar {
+    background-color: black;
+    padding: 0;
+}
+
+.menu-ul {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+}
+
+.menu-ul .nav-link {
+    color: white;
+    font-family: Georgia, serif;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.menu-ul .nav-link:hover {
+    color: #ddd;
+}
+
+.btn-close {
+    background-color: red;
+}
+
+/* .navbar-toggler{
+    position: fixed;
+    top:10px;
+    right: 10px;
+    z-index: 1000;
+} */
+
+.show {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.show .nav-link {
+    border-bottom: 1px solid white;
+    padding: 2px;
+}
+
+
+
+
+
+
+
+.header-responsive {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+.header-visible {
+    transform: translateY(0);
+}
+
+.header-hidden {
+    transform: translateY(-100%);
+}
+
+@media (max-width:768px) {
+    .menu-navbar{
+        width: 100%;
+        height: 100%;
+        background-color: black;
+    }
+    header {
+        display: flex;
+        flex-direction: row;
+        position: fixed;
+        z-index: 1000;
+        height: 50px;
+        width: 100%;
+    }
+
+    .header-top{
+        width: 100%;
+        padding:0 5%;
+    }
+
+    .header-element{
+        justify-content: flex-end;
+        gap :5px;
+        
+    }
+
+    .img-titulo{
+        flex: 3;
+        justify-content: flex-start;
+        
+    }
+
+    .titulo{
+       font-size: clamp(12px, 2cqw, 3rem);
+    }
+    .imagen-principal{
+    width: 40px;
+    }
+    .icono-compra{
+        font-size: 18px;
+    }
+
+    .navbar-toggler-icon {
+        filter: brightness(0) invert(1);
+        font-size: 18px;
+    }
 }

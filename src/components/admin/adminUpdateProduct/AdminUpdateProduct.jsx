@@ -4,6 +4,7 @@ import { MdCancel } from "react-icons/md";
 import { useLocation } from "react-router-dom";
 import "./adminUpdateProduct.css"
 import { ImageContext } from "../../../context/ImageContext";
+import { Container,Row,Col,Form,Button } from "react-bootstrap";
 
 const AdminUpdateProduct = () => {
 
@@ -189,82 +190,203 @@ const AdminUpdateProduct = () => {
 
 
     return (
-        <div className="conteiner-add">
+        <div className="container-add">
 
-            <div className="modify-color-shadow" ref={refModify}>
-                <div className="modify-color">
-                    <MdCancel className="modify-close" onClick={handlerModifyColorsNone} />
-                    <div className="modify-color-div">
-                        {colors.map(x =>
-                            <div className="article-modify">
-                                <img src={x.imageUrl.includes("http") ? x.imageUrl : "data:image/jpeg;base64," + x.imageUrl} alt={x.name} />
-                                <p>{x.name}</p>
-                                <MdCancel className="product-close" onClick={() => { setColors(colors.filter(y => y.name != x.name)) }} />
-                            </div>)}
+    {/* MODIFICAR COLORES */}
+    <div className="modify-color-shadow" ref={refModify}>
+        <div className="modify-color">
+
+            <MdCancel
+                className="modify-close"
+                onClick={handlerModifyColorsNone}
+            />
+
+            <div className="modify-color-div">
+
+                {colors.map(x => (
+                    <div className="article-modify" key={x.name}>
+
+                        <img
+                            src={
+                                x.imageUrl.includes("http")
+                                    ? x.imageUrl
+                                    : "data:image/jpeg;base64," + x.imageUrl
+                            }
+                            alt={x.name}
+                        />
+
+                        <p>{x.name}</p>
+
+                        <MdCancel
+                            className="product-close"
+                            onClick={() =>
+                                setColors(
+                                    colors.filter(y => y.name !== x.name)
+                                )
+                            }
+                        />
+
                     </div>
-                </div>
+                ))}
+
             </div>
+        </div>
+    </div>
 
 
+    {/* CONTENIDO */}
+    <Container className="py-4">
 
-            <div className="content-add">
-                <div className="content-add-divs">
-                    <div className="content-inputs-update">
+        <Row className="g-4">
+
+            {/* DATOS */}
+            <Col xs={12} lg={7}>
+
+                <div className="p-3 border rounded">
+
+                    <Form.Group>
+
+                        <Form.Label htmlFor="color">
+                            Color:
+                        </Form.Label>
+
+                        <Form.Select
+                            onChange={setColorSelect}
+                            ref={refColors}
+                            name="color"
+                            id="color"
+                            defaultValue=""
+                        >
+                            <option value="" disabled>
+                                Ingrese su opción
+                            </option>
+
+                            {selectColor.map(x => (
+                                <option
+                                    key={x.id}
+                                    value={JSON.stringify({
+                                        id: x.id,
+                                        color: x.name
+                                    })}
+                                >
+                                    {x.name}
+                                </option>
+                            ))}
+
+                        </Form.Select>
 
 
+                        {/* IMAGEN DEL COLOR */}
+                        <div className="mt-3">
 
-                        {/* <div className="div-add">
-                            <label htmlFor="category">Categoria:</label>
-                            <select name="category" id="category" defaultValue="" ref={refCategory} onChange={handlerCategory}>
-                                <option value="" disabled >Ingrese su opcion</option>
-                                <option value="broches">Broches</option>
-                                <option value="set-infantil">Set infantil</option>
-                                <option value="colitas-de-pelo">Colitas De Pelo</option>
-                                <option value="vinchas">Vinchas</option>
-                                <option value="tic-tac">Tic Tac</option>
-                                <option value="carteras">Carteras</option>
-                                <option value="billeteras-damas">Billeteras Damas</option>
-                                <option value="billeteras-caballeros">Billeteras Caballeros</option>
-                                <option value="mochilas">Mochilas</option>
-                                <option value="riñoneras-y-bandoleras">Riñoneras Y Bandoleras</option>
-                            </select>
+                            {colorImg === "" ? (
+
+                                <div
+                                    className="color-image div-image"
+                                    onDragOver={dragOver}
+                                    onDrop={dragDropColor}
+                                />
+
+                            ) : (
+
+                                <img
+                                    className="color-image"
+                                    src={
+                                        imgColor64
+                                            ? "data:image/jpeg;base64," + colorImg
+                                            : colorImg
+                                    }
+                                    onDragOver={dragOver}
+                                    onDrop={dragDropColor}
+                                    alt="Color"
+                                />
+
+                            )}
+
                         </div>
 
 
+                        {/* BOTONES */}
+                        <div className="d-flex gap-2 mt-3 flex-wrap">
 
-                        <div className="div-add">
-                            <label htmlFor="subCategory">Subcategoria:</label>
-                            <select name="subCategory" id="subCategory" onChange={setSubCategorySelect}>
-                                <option value="" disabled selected>Ingrese su opcion</option>
-                                {selectSubCategory.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
-                            </select>
-                        </div> */}
+                            <Button
+                                type="button"
+                                onClick={handlerColors}
+                                variant="primary"
+                            >
+                                Agregar Color
+                            </Button>
 
+                            <Button
+                                type="button"
+                                onClick={handlerModifyColorsFlex}
+                                variant="secondary"
+                            >
+                                Modificar Color
+                            </Button>
 
-
-                        <div className="div-add">
-                            <label htmlFor="color">Color:</label>
-                            <select onChange={setColorSelect} ref={refColors} name="" id="">
-                                <option value="" disabled selected>Ingrese su opcion</option>
-                                {selectColor.map((x) => <option key={x.id} value={JSON.stringify({ id: x.id, color: x.name })}>{x.name}</option>)}
-                            </select>
-                            {colorImg == "" ? <div className="color-image div-image" onDragOver={dragOver} onDrop={dragDropColor}></div> : <img className="color-image" src={imgColor64 ? "data:image/jpeg;base64," + colorImg : colorImg} onDragOver={dragOver} onDrop={dragDropColor} />}
-                            <button type="button" onClick={handlerColors}>Agregar Color</button>
-                            <button type="button" onClick={handlerModifyColorsFlex}>Modificar Color</button>
                         </div>
 
-
-
-
-                    </div>
-                    {img == "" ? <div className="image-add div-image" onDragOver={dragOver} onDrop={dragDrop}></div> : <img src={img64 ? "data:image/jpeg;base64," + img : img} className="image-add" onDragOver={dragOver} onDrop={dragDrop} />}
+                    </Form.Group>
 
                 </div>
 
-                <button type="button" className="button-add" onClick={handlerButtonAdd}>Agregar Producto</button>
-            </div>
+            </Col>
+
+
+            {/* IMAGEN DEL PRODUCTO */}
+            <Col xs={12} lg={5}>
+
+                <div className="h-100 d-flex justify-content-center align-items-center">
+
+                    {img === "" ? (
+
+                        <div
+                            className="image-update div-image w-100"
+                            onDragOver={dragOver}
+                            onDrop={dragDrop}
+                        />
+
+                    ) : (
+
+                        <img
+                            src={
+                                img64
+                                    ? "data:image/jpeg;base64," + img
+                                    : img
+                            }
+                            className="image-update img-fluid"
+                            onDragOver={dragOver}
+                            onDrop={dragDrop}
+                            alt="Producto"
+                        />
+
+                    )}
+
+                </div>
+
+            </Col>
+
+        </Row>
+
+
+        {/* ACTUALIZAR */}
+        <div className="d-flex justify-content-center mt-4">
+
+            <Button
+                type="button"
+                className="button-update"
+                variant="success"
+                onClick={handlerButtonAdd}
+            >
+                Actualizar Producto
+            </Button>
 
         </div>
+
+    </Container>
+
+</div>
     )
 }
 export default AdminUpdateProduct

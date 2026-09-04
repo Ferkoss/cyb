@@ -3,7 +3,7 @@ import Header from "../header/Header"
 
 const View = ({children})=>{
     return<>
-    <Header/>
+    <Header />
     {children}
     <Footer/>
     </>

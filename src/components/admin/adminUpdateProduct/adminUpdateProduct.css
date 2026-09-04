@@ -66,22 +66,21 @@
     background-color: gray;
 }
 
-.button-add{
+.button-update{
     width: 100%;
     max-width: 400px;
     min-width: 200px;
-    height: 30px;
+    height: 50px;
     margin-top: 20px;
     margin: 10px;
 }
 
-.image-add{
+.image-update{
     border: 2px solid red;
     width: 100%;
-    max-width: 250px;
-    height: 100%;
+    max-width: 500px;
     max-height: 400px;
-    
+    min-height: 500px;
 }
 
 
