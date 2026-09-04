@@ -9,8 +9,8 @@ const Footer = ()=>{
         <div className="contacto">
             <h3>Contactanos:</h3>
             <ul>
-                <li className="contacto-footer">Tel: 3412129131</li>
-                <li className="contacto-footer">Mail: CyB@gmail.com</li>
+                <li className="contacto-footer">Tel: +54 9 3412129131</li>
+                <li className="contacto-footer">Mail: cybproductosrosario@gmail.com</li>
                 <li className="contacto-footer">Rosario - Santa Fe</li>
             </ul>
         </div>

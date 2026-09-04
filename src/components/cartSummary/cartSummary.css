@@ -262,3 +262,10 @@ transition: border-color .3s, color .3s;
     color: goldenrod;
     transition: border-color .3s,color .3s;
 }
+
+
+@media (max-width:768px) {
+    .nombre,.cantidad,.precio{
+        margin-top: 30px;
+    }
+}

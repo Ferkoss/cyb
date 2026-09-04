@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react"
 import { MdCancel } from "react-icons/md";
 import { CartContext } from "../../context/CartContext";
-
+import "./elementCart.css"
+import { Form } from "react-bootstrap";
 const ElementCart = ({name,img,price,count}) => {
     const {cart,modifyCount,removeFromCart}=useContext(CartContext)
     const [countProd, setCountProd] = useState(count)
@@ -27,12 +28,12 @@ const ElementCart = ({name,img,price,count}) => {
             <p>Precio por unidad</p>
             <p>${price}</p>
         </div>*/}
+        
+        <Form.Group className="articulo-cantidad">
+            <Form.Label htmlFor="">Cantidad</Form.Label>
+            <Form.Control type="number" min="1" value={countProd} onChange={handlerModifyCount} />
 
-        <div className="articulo-cantidad">
-            <label htmlFor="">Cantidad</label>
-            <input type="number" min="1" value={countProd} onChange={handlerModifyCount} />
-
-        </div>
+        </Form.Group>
         <div className="precio">
             <p>Precio</p>
             <p>${totalProd}</p>
