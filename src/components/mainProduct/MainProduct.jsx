@@ -7,6 +7,7 @@ import DivProduct from "../divProduct/DivProduct"
 import { ProductContext } from "../../context/ProductContext"
 import { CgAdd } from "react-icons/cg";
 import { ImageContext } from "../../context/ImageContext"
+import { Spinner } from "react-bootstrap"
 const MainProduct = ({ category }) => {
 
     const {insertImage} = useContext(ImageContext)
@@ -33,9 +34,9 @@ const MainProduct = ({ category }) => {
             setProductLoad(true)
         setTouchButton(true)
         actualizateCart()
-
+        
         if (!button)
-            setProducts("Cargando...")
+            setProducts(<Spinner animation="border" role="status"><span className="visually-hidden">Loading...</span></Spinner>)
 
         //let dataStorange = productsStorange.find(x => x.type == category)
 

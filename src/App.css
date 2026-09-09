@@ -7,5 +7,6 @@
 
 body{
   min-height: 100vh;
+  min-width: 100vw;
   background-color: #e5e0d8;
 }

@@ -32,7 +32,7 @@
 
 
 .mensaje-prod{
-    margin: 20px;
+    margin: 50px 0;
 }
 
 .boton-agregar-prod{
@@ -55,6 +55,11 @@
         
         grid-template-columns: 100%;
         gap: 20px;
+    }
+
+    .mensaje-prod{
+        margin-bottom: 10px;
+        margin-top:70px;
     }
 
 }
